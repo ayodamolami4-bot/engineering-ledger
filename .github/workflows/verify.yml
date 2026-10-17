@@ -20,3 +20,19 @@ jobs:
         run: npm test
       - name: Type-check and production build
         run: npm run build
+      - name: Capture responsive visual review
+        run: |
+          mkdir -p "$RUNNER_TEMP/ledger-visual"
+          (npm run preview -- --host 127.0.0.1 --port 4173 > "$RUNNER_TEMP/ledger-preview.log" 2>&1 &)
+          for i in $(seq 1 30); do if curl -fsS http://127.0.0.1:4173/ > /dev/null; then break; fi; sleep 1; done
+          curl -fsS http://127.0.0.1:4173/ > /dev/null
+          CHROME=$(command -v google-chrome || command -v chromium || true)
+          if [ -z "$CHROME" ]; then echo "Browser not installed"; exit 1; fi
+          "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --hide-scrollbars --disable-extensions --window-size=1440,1000 --screenshot="$RUNNER_TEMP/ledger-visual/home-desktop.png" http://127.0.0.1:4173/
+          "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --hide-scrollbars --disable-extensions --window-size=390,844 --screenshot="$RUNNER_TEMP/ledger-visual/home-mobile.png" http://127.0.0.1:4173/
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ledger-visual-review
+          path: ${{ runner.temp }}/ledger-visual/
+          if-no-files-found: warn
