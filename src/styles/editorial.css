@@ -142,70 +142,20 @@ body { background:var(--cream); }
 @media(max-width:850px){.case-visual-overview{grid-template-columns:1fr;gap:20px}.case-visual-path{grid-template-columns:repeat(2,minmax(0,1fr))}.case-visual-path>div{min-height:105px}}
 @media(max-width:460px){.case-visual-path{grid-template-columns:repeat(2,minmax(0,1fr))}.case-visual-path>div{padding:16px 10px;min-height:90px}}
 
-/* Visual QA adjustments: keep the front page scannable on desktop and phones. */
-@media(min-width:851px){
- .editorial-hero-grid{grid-template-columns:1.2fr .8fr;min-height:470px}
- .editorial-hero-copy{padding:47px 0 37px}
- .editorial-hero h1{font-size:clamp(3.55rem,5.1vw,4.85rem)}
- .hero-aside{margin-top:30px}
- .bridge-study{min-height:360px}
- .bridge-note--c{bottom:78px;right:10px}
- .bridge-caption{bottom:-4px;font-size:.82rem}
-}
-@media(max-width:850px){
- .editorial-hero-copy{padding:44px 0 0}
- .hero-aside{margin-top:24px}
- .bridge-study{min-height:260px}
- .bridge-study svg{max-height:245px}
- .bridge-note--c{display:none}
- .bridge-caption{bottom:-6px;font-size:.75rem;left:4%}
-}
-@media(max-width:740px){
- .editorial-hero h1{font-size:clamp(2.58rem,10.7vw,3.2rem);line-height:1.01;margin-bottom:18px}
- .editorial-hero .hero-deck{font-size:1.01rem;line-height:1.5}
- .editorial-hero .button-row{margin-top:20px}
- .editorial-hero-copy{padding:33px 0 0}
- .hero-aside{display:none}
- .bridge-study{min-height:225px;margin:12px auto 3px}
- .bridge-study svg{max-height:215px}
- .bridge-note--a{top:0;left:2px}
- .bridge-note--b{top:0;right:0}
- .bridge-caption{display:none}
- .editorial-hero-bottom{padding:10px 0}
-}
+/* The product must be understood before readers encounter implementation details. */
+.project-explainer{margin:24px 0 38px;padding:36px 38px;background:#e7ede7;border:1px solid #c1d1c6;position:relative;isolation:isolate;}
+.project-explainer h2{font-size:clamp(2.1rem,3.2vw,3.45rem);margin:0 0 17px;}
+.project-definition{font:400 clamp(1.22rem,1.8vw,1.5rem)/1.5 var(--serif);max-width:900px;color:var(--ink);}
+.project-explainer-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;border-top:1px solid #b5c8bc;padding-top:25px;margin-top:25px;}
+.project-explainer-grid h3{font:500 1.45rem var(--serif);letter-spacing:-.03em;margin:0 0 9px;}
+.project-explainer-grid p{color:var(--soft);font-size:1.02rem;line-height:1.65;max-width:620px;margin:0;}
+.portfolio-feature .feature-definition{font-size:1.09rem;font-weight:600;color:var(--ink);max-width:350px;line-height:1.42;}
+.portfolio-feature .feature-problem{font-size:.9rem;color:var(--soft);line-height:1.5;max-width:350px;margin-bottom:25px;}
+.portfolio-feature h3{margin-bottom:9px;}
+@media(max-width:700px){.project-explainer{padding:26px 21px}.project-explainer-grid{grid-template-columns:1fr;gap:22px}.portfolio-feature .feature-definition{font-size:1rem}}
 
-/* Last visual review: show working content earlier on deep pages. */
-.note-publication.page-top{padding-top:35px}
-.note-publication .page-title{font-size:clamp(2.9rem,5vw,4.55rem);line-height:1.02;max-width:1020px}
-.note-publication .note-lede{margin:20px 0 24px;font-size:clamp(1.23rem,1.8vw,1.5rem);max-width:880px}
-.note-publication .note-layout{margin-top:27px}
-.about-editorial.page-top{padding-top:38px}
-.about-editorial-header{padding:10px 0 34px}
-.about-editorial-header .page-title{font-size:clamp(3.05rem,4.9vw,4.75rem);line-height:1.04}
-.about-editorial-header .page-deck{font-size:1.12rem;max-width:790px;margin-bottom:7px}
-.case-study.page-top{padding-top:34px}
-.case-study .case-intro{grid-template-columns:1.1fr .9fr;gap:36px;padding-bottom:35px}
-.case-study .case-intro .page-title{font-size:clamp(3.2rem,5vw,4.7rem);margin-bottom:14px}
-.case-study .case-subtitle{font-size:clamp(1.5rem,2.3vw,2rem);line-height:1.16}
-.case-study .case-summary{font-size:1rem;line-height:1.58;margin-bottom:15px}
-.case-study .case-intro .eyebrow{margin-bottom:8px}
-.case-study .case-intro .button-row{margin-top:14px;gap:11px}
-.case-study .case-intro .btn{font-size:.8rem;padding:10px 12px}
-.case-study .case-intro .text-link{font-size:.84rem}
-.case-study .case-facts{gap:8px;padding-top:0;border-top:0}
-.case-lead-preview{display:block;overflow:hidden;text-decoration:none!important;color:var(--ink)!important;background:#e0e9e2;border:1px solid #abb8af}
-.case-lead-preview img{display:block;aspect-ratio:1.5;width:100%;object-fit:cover;object-position:top left}
-.case-lead-preview small{display:block;padding:9px 12px;font:600 .65rem var(--mono);color:#53645e}
-@media(min-width:851px){.bridge-note--c{bottom:41px}}
-@media(max-width:850px){.case-study .case-intro{grid-template-columns:1fr;gap:25px}}
-@media(max-width:740px){
- .note-publication .page-title{font-size:clamp(2.6rem,9vw,3.35rem)}
- .note-publication .note-lede{font-size:1.17rem;margin:12px 0 22px}
- .about-editorial-header .page-title{font-size:clamp(2.8rem,9vw,3.55rem)}
- .case-study .case-intro .page-title{font-size:clamp(2.9rem,10vw,3.4rem)}
- .case-study .case-subtitle{font-size:1.52rem}
- .case-study .case-summary{font-size:.98rem}
- .case-study .case-intro .btn{padding:10px 11px;font-size:.75rem}
- .case-study .case-lead-preview img{aspect-ratio:1.85}
- .case-study .preview-note{margin-top:10px;font-size:.6rem}
-}
+/* Conceptual engineering illustration replaces the inaccurate bridge sketch. */
+.systems-study{margin:0;align-self:center;width:100%;min-width:0;position:relative;z-index:1;padding:8px 0;}
+.systems-study svg{display:block;width:100%;height:auto;max-width:720px;margin:auto;filter:drop-shadow(0 8px 12px #1b303608);}
+.systems-study figcaption{font:italic 1.02rem var(--serif);color:#536561;text-align:center;margin-top:-8px;}
+@media(max-width:740px){.systems-study{padding:3px 0 20px;}.systems-study figcaption{font-size:.88rem;margin-top:-2px;}}
