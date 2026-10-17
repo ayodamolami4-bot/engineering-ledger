@@ -5,8 +5,8 @@ export function ProjectPreview({project}:{project:Project}) {
  return <section className="guided-preview-section" id="preview" aria-labelledby="preview-title">
    <div className="guided-preview-heading">
     <div><p className="eyebrow">GUIDED PRODUCT WALKTHROUGH / SAMPLE DATA</p>
-     <h2 id="preview-title">Understand the workflow in two minutes.</h2>
-     <p>Explore a populated, deliberately limited interaction that illustrates the product's core responsibility. No sign-in, production data, or backend wake-up required.</p>
+     <h2 id="preview-title">Explore what a customer or team member actually does.</h2>
+     <p>Start with the real user journey, then switch to the engineering views that explain how the system protects it. This independent sample is interactive, but it is not the production interface.</p>
     </div>
     <a className="btn btn-primary" href={project.demoPath}>Launch interactive preview ↗</a>
    </div>

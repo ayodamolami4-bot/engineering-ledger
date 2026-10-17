@@ -48,6 +48,9 @@ test('Marketplace: sample admin review, wishlist, seller finance',()=>{
  marketplaceAction('approve-Fieldwork Supplies',s,quiet,quiet);
  assert.equal(s.vendorApplications[0].status,'APPROVED');
  assert.match(marketplaceRender('finance',s),/gross sample volume/i);
+ assert.match(marketplaceRender('catalog',s),/Find your next favourite/);
+ assert.match(marketplaceRender('product',s),/Add to cart/);
+ assert.match(marketplaceRender('tracking',s),/Seller updates/);
  assert.match(marketplaceRender('admin',s),/Approved/);
 });
 test('Editorial navigation has a back action, real stack, authored essays and subtle hexagons',()=>{
@@ -55,11 +58,34 @@ test('Editorial navigation has a back action, real stack, authored essays and su
  assert.match(read('src/pages/About.tsx'),/Kubernetes/);
  assert.match(read('src/pages/About.tsx'),/Jenkins/);
  assert.match(read('src/pages/About.tsx'),/JUnit 5/);
- assert.match(read('src/pages/Home.tsx'),/BridgeStudy/);
+ assert.match(read('src/pages/Home.tsx'),/SystemStudy/);
  assert.match(read('src/styles/editorial.css'),/hex-surface::before/);
  const notePage=read('src/pages/Note.tsx');
  assert.ok(!notePage.includes('Further reading'));
  assert.ok(!notePage.includes('n.source.url'));
  const essays=read('src/content/noteEssays.ts');
  assert.match(notePage,/What this record is/);
+});
+
+
+test('Marketplace shopper sees catalog, product detail, cart and order tracking before operational screens',()=>{
+ const s=marketplaceFixture();let page='catalog';const go=x=>page=x;
+ assert.match(marketplaceRender('catalog',s),/Find your next favourite/);
+ marketplaceAction('view-SKU-A',s,go,quiet);
+ assert.equal(page,'product');assert.match(marketplaceRender('product',s),/Compact mechanical keyboard/);
+ marketplaceAction('add-SKU-A',s,go,quiet);
+ marketplaceAction('add-SKU-B',s,go,quiet);
+ assert.match(marketplaceRender('checkout',s),/Customer total/);
+ marketplaceAction('marketplace-place',s,go,quiet);
+ assert.equal(page,'orders');
+ assert.equal(s.orders.at(-1).suborders.length,2);
+ assert.match(marketplaceRender('tracking',s),/Seller updates/);
+});
+
+test('The static route shell script exists so deep links do not require a Render rewrite',()=>{
+ assert.match(read('package.json'),/emit-route-shells/);
+ const source=read('scripts/emit-route-shells.mjs');
+ assert.match(source,/join\(folder, 'index.html'\)/);
+ assert.match(source,/work\/\$\{slug\}/);
+ assert.match(source,/notes\/\$\{slug\}/);
 });

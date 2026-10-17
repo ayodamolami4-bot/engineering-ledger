@@ -7,14 +7,21 @@ export default function CaseStudy(){
  const p=getProject(slug||'');
  if(!p)return <section className="wrap section"><h1>Project not found.</h1><Link to="/work">Back to work</Link></section>;
  return <article className="case-study wrap page-top">
+  <Link to="/work" className="back-link">← Selected work</Link>
   <header className="case-intro">
    <div><p className="eyebrow">CASE STUDY / {p.number} / {p.category}</p><h1 className="page-title">{p.title}</h1>
     <p className="case-subtitle">{p.subtitle}</p><p className="case-summary">{p.summary}</p>
     <div className="button-row"><a className="btn btn-primary" href={p.demoPath}>Explore the product tour ↗</a><a className="btn btn-outline" href={p.liveUrl} target="_blank" rel="noopener noreferrer">Open live application ↗</a><a className="text-link" href="#problem">Read the engineering story ↓</a></div>
     <p className="preview-note">Fast walkthrough with fictional sample data. The live application remains separate.</p>
    </div>
-   <aside className="case-facts"><a className="case-lead-preview" href={p.demoPath}><img src={p.previewScreenshot} alt={`${p.title} guided-preview sample workspace`}/><small>POPULATED SAMPLE PREVIEW — OPEN THE TOUR ↗</small></a><span>MY ROLE</span><strong>{p.role}</strong><span>YEAR</span><strong>{p.year}</strong><span>CORE STACK</span><p>{p.stack.join(' · ')}</p>{p.githubUrl?<a href={p.githubUrl} target="_blank" rel="noreferrer">Explore public backend code ↗</a>:<p>Production source is private; implementation is described below.</p>}</aside>
+   <aside className="case-facts"><span>MY ROLE</span><strong>{p.role}</strong><span>YEAR</span><strong>{p.year}</strong><span>CORE STACK</span><p>{p.stack.join(' · ')}</p>{p.githubUrl?<a href={p.githubUrl} target="_blank" rel="noreferrer">Explore public backend code ↗</a>:<p>Production source is private; implementation is described below.</p>}</aside>
   </header>
+  <section className="project-explainer" aria-labelledby="project-definition">
+   <p className="eyebrow">START HERE / THE PRODUCT EXPLAINED</p>
+   <h2 id="project-definition">{p.visual==='operations'?'What is ManageOS?':'What is Marketplace?'}</h2>
+   <p className="project-definition">{p.visual==='operations'?'ManageOS is a business operations management platform. It connects company goals, departments, projects, tasks, approvals and audit records so teams can organize work and understand who is responsible for what.':'Marketplace is a multi-vendor shopping platform. Customers browse products from different sellers and pay through a single checkout, while each seller handles their own inventory, orders and fulfilment.'}</p>
+   <div className="project-explainer-grid"><div><h3>The problem it solves</h3><p>{p.visual==='operations'?'Work scattered between messages, spreadsheets and meetings makes it difficult to know what is happening, what is blocked, and why a decision was made.':'Buying from several sellers should be simple for customers. Behind the scenes, each seller must receive the correct order, stock must not be oversold and payments must be recoverable after interruptions.'}</p></div><div><h3>What using it feels like</h3><p>{p.visual==='operations'?'An owner creates a company goal, a manager connects a project and assigns work, an employee submits a result, and a reviewer records an approval. The history remains available for accountability.':'A shopper discovers products, opens product details, saves favourites, adds items from multiple sellers to a cart, checks out once and follows an order. Sellers then fulfil their own portions.'}</p></div></div>
+  </section>
   <div className="reader-summary" aria-label="Two-minute overview">
     <p className="eyebrow">THE SHORT VERSION</p>
     <div><h2>What is it?</h2><p>{p.productApproach}</p></div>

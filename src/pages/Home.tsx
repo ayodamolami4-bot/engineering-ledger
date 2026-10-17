@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom';
 import {site} from '../content/site';
 import {projects} from '../content/projects';
 import {ProjectFeature} from '../components/ProjectFeature';
-import {BridgeStudy} from '../components/BridgeStudy';
+import {SystemStudy} from '../components/SystemStudy';
 import {fieldNotes} from '../content/notes';
 const selected=['transactions','system-boundaries','testing-strategy','auditability'];
 const topics=selected.map(slug=>fieldNotes.find(n=>n.slug===slug)!);
@@ -14,7 +14,7 @@ export default function Home(){return <div className="ledger-home">
    <p className="hero-deck">I'm {site.name}. I build software for real operational problems—where the right decisions make systems useful, reliable and easier to change.</p>
    <div className="button-row"><Link className="btn btn-primary" to="/work">View my work <span aria-hidden="true">→</span></Link><Link className="text-link" to="/about">Meet the engineer ↗</Link></div>
    <p className="hero-aside">01 / Systems matter. The people using them matter more.</p>
-  </div><BridgeStudy/></div>
+  </div><SystemStudy/></div>
   <div className="wrap editorial-hero-bottom"><span>ENGINEERING LEDGER / FIELD EDITION</span><span>PRODUCT · ARCHITECTURE · OPERATIONS</span><span>2026 — LAGOS</span></div>
  </section>
  <section className="wrap editorial-section home-projects" id="selected-work">
