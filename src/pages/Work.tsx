@@ -1,0 +1,3 @@
+import {ProjectFeature} from '../components/ProjectFeature';
+import {projects} from '../content/projects';
+export default function Work(){return <section className="section wrap page-top"><p className="eyebrow">THE ENGINEERING LEDGER / SELECTED WORK</p><h1 className="page-title">Products, considered from both sides.</h1><p className="page-deck">The user-facing problem and the engineering work are inseparable. These two projects illustrate different demands: operational visibility and transactional correctness.</p><div className="feature-grid">{projects.map(project=><ProjectFeature key={project.slug} project={project}/>)}</div></section>}

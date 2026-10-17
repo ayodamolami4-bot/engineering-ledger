@@ -1,0 +1,12 @@
+# Deploy only after this repository exists on GitHub and has passed its CI checks.
+services:
+  - type: web
+    name: engineering-ledger
+    runtime: static
+    buildCommand: npm install --no-audit --no-fund && npm run build
+    staticPublishPath: dist
+    pullRequestPreviewsEnabled: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
