@@ -8,6 +8,23 @@ function setProduct(product){if(!['manageos','marketplace'].includes(product))re
 function setScreen(screen){const valid=(s.product==='manageos'?manageosScreens:marketplaceScreens).some(x=>x.id===screen);if(!valid)return;s.screen[s.product]=screen;render()}
 function render(){const manageos=s.product==='manageos';const screens=manageos?manageosScreens:marketplaceScreens;const current=s.screen[s.product];$('back-to-study').href=manageos?'/work/manageos':'/work/marketplace';$('return-to-study').href=$('back-to-study').href;$('demo-eyebrow').textContent=manageos?'CASE 01 / ORGANIZATIONAL ACCOUNTABILITY':'CASE 02 / TRANSACTIONAL COMMERCE';$('demo-title').textContent=manageos?'ManageOS — guided workflow':'Marketplace — guided transaction';$('demo-description').textContent=manageos?'Trace work from goals to assignment, submission, approval and audit evidence.':'Follow sample products from cart to parent order, vendor sub-orders and independent fulfilment.';for(const tab of document.querySelectorAll('[data-product]'))tab.setAttribute('aria-selected',String(tab.dataset.product===s.product));$('demo-nav').innerHTML=screens.map(x=>`<button type="button" data-screen="${x.id}" aria-current="${x.id===current}">${x.title}</button>`).join('');$('demo-root').innerHTML=manageos?manageosRender(current,s.manageos):marketplaceRender(current,s.marketplace);const [heading,body]=(manageos?manageosStories:marketplaceStories)[current];$('story-title').textContent=heading;$('story-body').textContent=body;document.querySelectorAll('[data-route]').forEach(x=>x.classList.toggle('active',x.dataset.route===s.product));}
 document.addEventListener('click',e=>{const product=e.target.closest('[data-product]');if(product){setProduct(product.dataset.product);return;}const screen=e.target.closest('[data-screen]');if(screen){setScreen(screen.dataset.screen);return;}const act=e.target.closest('[data-action]');if(act){const go=scr=>setScreen(scr);if(s.product==='manageos'){manageosAction(act.dataset.action,s.manageos,go,announce)}else{marketplaceAction(act.dataset.action,s.marketplace,go,announce)}render();return;}});
+// Keep search responsive without destroying input focus after every keystroke.
+document.addEventListener('input',event=>{
+ if(event.target?.id!=='sample-shop-search')return;
+ s.marketplace.query=event.target.value;
+ const visible=[...document.querySelectorAll('.store-product-card')].filter(card=>{
+  const matches=card.dataset.search?.includes(s.marketplace.query.trim().toLowerCase());
+  card.hidden=!matches;
+  return matches;
+ }).length;
+ const counter=document.getElementById('shop-result-count');
+ if(counter)counter.textContent=`${visible} results · Demo catalog`;
+});
+document.addEventListener('change',event=>{
+ if(event.target?.id!=='sample-shop-sort')return;
+ s.marketplace.sort=event.target.value;
+ render();
+});
 $('reset-demo').addEventListener('click',()=>{if(s.product==='manageos'){s.manageos=manageosFixture();s.screen.manageos='overview'}else{s.marketplace=marketplaceFixture();s.screen.marketplace='catalog'};announce('Demo sample restored');render()});
 function applyHash(){const hash=location.hash.slice(1);if(hash==='manageos'||hash==='marketplace')setProduct(hash)}window.addEventListener('hashchange',applyHash);
 applyHash();render();

@@ -9,17 +9,35 @@ const pill=s=>`<span class="pill ${['CONFIRMED','SHIPPED','APPROVED','VERIFIED']
 const link=(s,title)=>`<button class="small-btn outline" data-action="go-marketplace-${s}">${title} →</button>`;
 const btn=(action,text,disabled=false)=>`<button class="small-btn" data-action="${action}" ${disabled?'disabled':''}>${text}</button>`;
 const table=(head,rows)=>`<table class="data-table"><thead><tr>${head.map(x=>`<th>${e(x)}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table>`;
+// Illustrative product drawings preserve a recognisable shopping interface without
+// passing stock photography or invented screenshots off as real merchandise.
+const catalogArtwork = (product) => {
+ const common='viewBox="0 0 220 148" role="img" aria-label="Illustrative product drawing"';
+ const drawings={
+  'SKU-A':'<rect x="29" y="44" width="162" height="74" rx="9" fill="#344840"/><rect x="34" y="49" width="152" height="64" rx="6" fill="#f7f6f0"/>'+Array.from({length:4},(_,r)=>Array.from({length:r===3?9:11},(_,c)=>`<rect x="${40+c*13}" y="${54+r*14}" width="10" height="10" rx="2" fill="${r===3&&c>3&&c<8?'#9abdab':'#dce4dc'}" stroke="#a7b9ac" stroke-width=".5"/>`).join('')).join('')+'<rect x="75" y="100" width="70" height="9" rx="2" fill="#b7c8ba"/>',
+  'SKU-B':'<path d="M46 110h130M68 37l90 17-21 47-85-17z" fill="#d3dcd3" stroke="#516b5b" stroke-width="5" stroke-linejoin="round"/><path d="M60 116l51-37 45 37M111 79V39" fill="none" stroke="#657f6b" stroke-width="6" stroke-linecap="round"/>',
+  'SKU-C':'<rect x="61" y="18" width="100" height="119" rx="7" fill="#d2a77c" stroke="#75563e" stroke-width="3"/><path d="M83 43h60M83 56h60M83 69h43" stroke="#815f46" stroke-width="3"/><path d="M65 19v118" stroke="#ecd3b5" stroke-width="8"/><circle cx="111" cy="105" r="17" fill="none" stroke="#89664d" stroke-width="2"/>',
+  'SKU-D':'<path d="M112 126V68M110 69l35-38M111 126H68M145 31l32 23-13 22-34-25z" fill="#9dbaaa" stroke="#4d7262" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M76 126h74" stroke="#496755" stroke-width="7" stroke-linecap="round"/><circle cx="113" cy="69" r="8" fill="#c8d7c8" stroke="#517563" stroke-width="3"/>',
+ };
+ return `<svg ${common}>${drawings[product.id]||'<circle cx="110" cy="74" r="45" fill="#cdd9cf"/>'}</svg>`;
+};
 const tag='<p class="inline-info">Fictional state and simulated outcomes only. The real Spring Boot backend enforces roles, payment verification, stock locks and idempotent checkout.</p>';
 export function marketplaceRender(screen,s){
  const top=`<p class="page-kicker">MULTI-VENDOR COMMERCE / ${screen.toUpperCase()}</p>`;
- if(screen==='catalog')return top+`<div class="storefront">
+ if(screen==='catalog'){
+  const categories=['All',...new Set(s.products.map(p=>p.category))];
+  const visible=s.products.filter(p=>(s.category==='All'||p.category===s.category)&&(!s.query||`${p.name} ${p.vendor} ${p.category}`.toLowerCase().includes(s.query.toLowerCase())));
+  const sorted=[...visible].sort((a,b)=>s.sort==='price-asc'?a.price-b.price:s.sort==='price-desc'?b.price-a.price:0);
+  return top+`<div class="storefront">
   <div class="store-head"><div><strong class="store-brand">MARKET /<span> SAMPLE</span></strong><small>Discover useful things, from independent sellers.</small></div><button class="store-cart" data-action="go-marketplace-checkout" aria-label="Open shopping cart">Cart · ${s.cart.reduce((n,x)=>n+x.quantity,0)} →</button></div>
   <div class="store-banner"><span>DISCOVER / NEW ARRIVALS</span><h3>Find your next favourite.</h3><p>Browse products from independent vendors in one place.</p></div>
-  <div class="store-category-row"><span>Explore by category</span><span>Electronics</span><span>Home & living</span><span>Office essentials</span></div>
-  <div class="store-section-head"><h4>Products worth exploring</h4><p>${s.products.length} available · Demo catalog</p></div>
-  <div class="store-product-grid">${s.products.map(p=>`<article class="store-product-card"><button class="store-product-hero" data-action="view-${p.id}" aria-label="View details for ${e(p.name)}"><span class="store-product-shape" aria-hidden="true">${e(p.icon)}</span><span class="store-product-category">${e(p.category||'Essentials')}</span></button><div class="store-product-body"><small>Sold by ${e(p.vendor)}</small><button class="store-product-title" data-action="view-${p.id}">${e(p.name)}</button><span class="store-rating">★ ★ ★ ★ ☆ <small>Sample rating</small></span><div class="store-product-bottom"><strong>${money(p.price)}</strong><button data-action="add-${p.id}" ${p.stock<=0?'disabled':''}>Add +</button></div><button class="store-wish" data-action="wish-${p.id}" aria-pressed="${s.wishlist.includes(p.id)}">${s.wishlist.includes(p.id)?'♥ Saved':'♡ Save to wishlist'}</button></div></article>`).join('')}</div>
+  <div class="store-controls"><label for="sample-shop-search">Search the sample store</label><div><input id="sample-shop-search" type="search" placeholder="Search products or sellers" value="${e(s.query)}" autocomplete="off"/><select id="sample-shop-sort" aria-label="Sort sample products"><option value="featured" ${s.sort==='featured'?'selected':''}>Featured</option><option value="price-asc" ${s.sort==='price-asc'?'selected':''}>Price: low to high</option><option value="price-desc" ${s.sort==='price-desc'?'selected':''}>Price: high to low</option></select></div></div>
+  <div class="store-category-row" aria-label="Filter products by category"><span>Explore by category</span>${categories.map(c=>`<button type="button" data-action="filter-${e(c)}" aria-pressed="${s.category===c}">${e(c)}</button>`).join('')}</div>
+  <div class="store-section-head"><h4>Products worth exploring</h4><p id="shop-result-count">${sorted.length} results · Demo catalog</p></div>
+  <div class="store-product-grid">${sorted.map(p=>`<article class="store-product-card" data-search="${e(`${p.name} ${p.vendor} ${p.category}`.toLowerCase())}"><button class="store-product-hero" data-action="view-${p.id}" aria-label="View details for ${e(p.name)}"><span class="store-product-shape" aria-hidden="true">${catalogArtwork(p)}</span><span class="store-product-category">${e(p.category||'Essentials')}</span></button><div class="store-product-body"><small>Sold by ${e(p.vendor)}</small><button class="store-product-title" data-action="view-${p.id}">${e(p.name)}</button><span class="store-rating">★ ★ ★ ★ ☆ <small>Sample rating</small></span><div class="store-product-bottom"><strong>${money(p.price)}</strong><button data-action="add-${p.id}" ${p.stock<=0?'disabled':''}>Add +</button></div><button class="store-wish" data-action="wish-${p.id}" aria-pressed="${s.wishlist.includes(p.id)}">${s.wishlist.includes(p.id)?'♥ Saved':'♡ Save to wishlist'}</button></div></article>`).join('')||'<div class="empty-results">No sample products match. Try another category or search.</div>'}</div>
   <div class="store-footer">${link('checkout',`Proceed to cart (${s.cart.reduce((n,x)=>n+x.quantity,0)})`)}</div>
   </div>`;
+ }
  if(screen==='product'){
   const p=s.products.find(x=>x.id===s.selectedProduct)||s.products[0];
   return top+`<div class="store-product-page"><button class="store-back" data-action="go-marketplace-catalog">← All products</button><div class="product-detail-layout"><div class="product-detail-art"><span>${e(p.icon)}</span><small>ILLUSTRATIVE PRODUCT IMAGE / SAMPLE</small></div><div><p class="flag">${e(p.category||'Product')} / SOLD BY ${e(p.vendor)}</p><h3>${e(p.name)}</h3><p class="store-rating">★★★★☆ · Illustrative product rating</p><h4>${money(p.price)}</h4><p>See product specifications, seller context, stock availability and price before choosing what to buy. This preview uses fictional products and values.</p><p><strong>${p.stock} units</strong> in sample stock</p><div class="button-row">${btn(`add-${p.id}`,'Add to cart +',p.stock<=0)}${btn(`wish-${p.id}`,s.wishlist.includes(p.id)?'♥ Saved':'♡ Save to wishlist')}</div><div class="store-purchase-note">Sample checkout does not collect customer information or charge a card.</div>${link('checkout','View shopping cart')}</div></div></div>`;
@@ -39,8 +57,8 @@ export function marketplaceRender(screen,s){
  return top+'<h3>Choose a scenario.</h3>';
 }
 export function marketplaceAction(action,s,go,notify){
+ if(action.startsWith('filter-')){s.category=action.slice(7);if(s.category!=='All'&&!s.products.some(p=>p.category===s.category))s.category='All';return;}
  if(action.startsWith('go-marketplace-')){go(action.replace('go-marketplace-',''));return;}
- if(action.startsWith('view-')){if(s.products.some(x=>x.id===action.slice(5))){s.selectedProduct=action.slice(5);go('product');}return;}
  if(action.startsWith('view-')){if(s.products.some(x=>x.id===action.slice(5))){s.selectedProduct=action.slice(5);go('product');}return;}
  if(action.startsWith('wish-')){const id=action.slice(5);if(!s.products.some(p=>p.id===id))return;if(s.wishlist.includes(id))s.wishlist=s.wishlist.filter(x=>x!==id);else s.wishlist.push(id);notify('Sample wishlist updated');return;}
  if(action.startsWith('remove-')){s.cart=s.cart.filter(x=>x.id!==action.slice(7));notify('Product removed from sample cart');return;}

@@ -1,0 +1,42 @@
+name: Capture public product screens
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/capture-public-apps.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Capture real PUBLIC application pages (no login, no writes)
+        shell: bash
+        run: |
+          set -uo pipefail
+          mkdir -p public-app-screens
+          CHROME=$(command -v google-chrome || command -v chromium || true)
+          if [ -z "$CHROME" ]; then echo 'No browser available'; exit 1; fi
+          capture () {
+            local name="$1" url="$2"
+            echo "Capturing public screen $name: $url"
+            # Wake free services; authentication is NOT attempted.
+            curl --silent --show-error --location --max-time 100 --retry 2 --retry-delay 12 "$url" -o /dev/null || true
+            timeout 100 "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --hide-scrollbars \
+              --disable-extensions --window-size=1440,1000 --virtual-time-budget=9000 \
+              --screenshot="public-app-screens/$name.png" "$url" >/tmp/chrome-$name.log 2>&1 || true
+            if [ ! -s "public-app-screens/$name.png" ]; then echo "Capture unavailable: $name"; tail -25 /tmp/chrome-$name.log || true; fi
+          }
+          capture marketplace-public-home https://marketplace-frontend-sir8.onrender.com/
+          capture marketplace-public-products https://marketplace-frontend-sir8.onrender.com/products
+          capture manageos-public-home https://manageos.onrender.com/
+          printf '%s\n' 'These are public pages only. No account credentials used or production records modified.' > public-app-screens/README.txt
+      - name: Preserve public screenshot evidence
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: genuine-public-app-screenshots
+          path: public-app-screens/
+          if-no-files-found: warn

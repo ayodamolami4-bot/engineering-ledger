@@ -19,7 +19,7 @@ export function marketplaceFixture(){return {
   {id:'SKU-C',name:'Canvas work notebook',vendor:'Stationery Lab',price:7900,stock:15,icon:'▤',category:'Stationery'},
   {id:'SKU-D',name:'Desk task lamp',vendor:'Desk & Co.',price:26900,stock:6,icon:'◕',category:'Home & living'}
  ],
- cart:[],wishlist:[],selectedProduct:'SKU-A',orders:[
+ cart:[],wishlist:[],category:'All',query:'',sort:'featured',selectedProduct:'SKU-A',orders:[
  {id:'ORD-DEMO-1042',total:81000,payment:'Confirmed (sample)',status:'CONFIRMED',lines:[{product:'Compact mechanical keyboard',qty:1,vendor:'Stationery Lab',price:48500},{product:'Adjustable laptop stand',qty:1,vendor:'Desk & Co.',price:32500}],suborders:[{id:'SUB-A',vendor:'Stationery Lab',status:'PENDING_FULFILLMENT'},{id:'SUB-B',vendor:'Desk & Co.',status:'PROCESSING'}]},
  {id:'ORD-DEMO-1041',total:26900,payment:'Unsettled (sample)',status:'PENDING_PAYMENT',lines:[{product:'Desk task lamp',qty:1,vendor:'Desk & Co.',price:26900}],suborders:[{id:'SUB-C',vendor:'Desk & Co.',status:'PENDING_PAYMENT'}]}
  ],vendorApplications:[{name:'Fieldwork Supplies',owner:'Reni Bello',status:'PENDING'}],payments:[{reference:'PAY-DEMO-1041',orderId:'ORD-DEMO-1041',status:'UNSETTLED',attempts:1}],events:[{action:'Sample workspace initialized',object:'Demo products, orders and vendors'}],nextOrder:1043,message:''

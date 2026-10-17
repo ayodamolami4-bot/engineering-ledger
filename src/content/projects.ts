@@ -66,7 +66,7 @@ export const projects: readonly Project[] = [
     practicalScenario:'A team finishes a deliverable, but the manager cannot see who approved it or why it was changed. The organization needs a clear path from assigned work to review, acceptance and a traceable record.',
     workflow:['A company defines a goal and the projects supporting it.','A project member receives an assignment and submits completed work.','An authorized reviewer records a decision.','Activity and audit histories preserve relevant context, within company and permission boundaries.'],
     outcomesToMeasure:['Time managers spend requesting routine progress updates.','Median time between submission and review decision.','Time required to reconstruct a significant operational change.'],
-    previewScreenshot:'/previews/assets/desktop-manageos-audit.webp',
+    previewScreenshot:'/previews/assets/manageos-overview.webp',
     previewScene:'An illustrative audit screen from the independent sample-data walkthrough, not a production screenshot.',
     demoPath:'/previews/#manageos', liveUrl:'https://manageos.onrender.com', visual:'operations'
   },
@@ -99,7 +99,7 @@ export const projects: readonly Project[] = [
     practicalScenario:'One buyer checks out items from two different sellers. The customer needs one order, each seller needs their own fulfillment record, and the system must handle a repeated checkout request without generating unintended duplicate effects.',
     workflow:['The customer selects products belonging to separate vendors.','One checkout creates a customer-facing parent order with vendor-specific sub-orders.','Transaction boundaries coordinate stock and order state.','Payment confirmation and reconciliation account for delayed or uncertain external outcomes.'],
     outcomesToMeasure:['Frequency of duplicate checkout effects under repeated requests.','Oversell attempts in concurrent-inventory tests.','Time to resolve unsettled payment states after external failures.'],
-    previewScreenshot:'/previews/assets/desktop-marketplace-orders.webp',
+    previewScreenshot:'/previews/assets/marketplace-catalog.webp',
     previewScene:'A fictional order and vendor-fulfillment scene from the static guided preview, not a real transaction.',
     demoPath:'/previews/#marketplace',liveUrl:'https://marketplace-frontend-sir8.onrender.com',githubUrl:'https://github.com/ayodamolami4-bot/marketplace-backend',visual:'commerce'
   }

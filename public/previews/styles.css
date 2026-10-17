@@ -64,3 +64,30 @@
 .tracking-steps>div{display:grid;gap:7px;justify-items:center;text-align:center;font-size:10px;color:#8b948e}.tracking-steps b{border:1px solid #9fb4a6;border-radius:50%;width:31px;height:31px;display:grid;place-items:center}.tracking-steps .complete{color:#1a7545;font-weight:700}.tracking-steps .complete b{background:#d5eede;border-color:#3b9b67}.tracking-vendor{border-top:1px solid #e2e9e3;padding:11px 0}
 @media(max-width:850px){.store-product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:540px){.store-head{padding:12px}.store-banner{margin:12px;padding:20px;min-height:140px}.store-banner h3{font-size:25px}.store-category-row{padding:0 12px 12px}.store-section-head{margin:15px 12px}.store-product-grid{margin:0 12px;gap:7px}.store-product-shape{font-size:45px}.store-product-body{padding:9px}.store-product-title{font-size:12px}.store-product-bottom{flex-direction:column;align-items:start}.product-detail-layout{grid-template-columns:1fr}.product-detail-art{min-height:180px}.product-detail-art span{font-size:70px}.tracking-steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Customer storefront: functional discovery and illustrated products, not a diagram. */
+.store-controls{padding:17px 22px 12px;background:#fff;display:grid;gap:7px}
+.store-controls label{font-size:11px;font-weight:750;color:#355748}
+.store-controls>div{display:grid;grid-template-columns:1fr 175px;gap:10px}
+.store-controls input,.store-controls select{width:100%;min-width:0;border:1px solid #c7dacd;border-radius:7px;padding:11px 12px;color:#253d2e;background:#fff;font-size:12px}
+.store-category-row button{border:1px solid #c3d8c8;background:#e8f4ea;color:#356147;padding:8px 11px;border-radius:5px;white-space:nowrap;font-size:11px}
+.store-category-row button[aria-pressed=true]{border-color:#1b7145;background:#1b7145;color:white}
+.store-product-hero{aspect-ratio:1.5;background:#edf3ef}
+.store-product-shape{display:block;width:88%;max-width:210px;height:auto;text-shadow:none}
+.store-product-shape svg{width:100%;height:auto;display:block}
+.empty-results{grid-column:1/-1;padding:26px;background:white;color:#466051;text-align:center;font-size:13px}
+.store-product-card[hidden]{display:none!important}
+.store-product-hero:hover svg{transform:scale(1.03);transition:transform .2s ease}
+@media(max-width:540px){.store-controls{padding:12px}.store-controls>div{grid-template-columns:minmax(0,1fr)}.store-product-shape{width:98%}}
+
+/* Real-time embedded guided product view, not a cached mock screenshot. */
+.embed body{background:#fff}
+.embed .site-frame{padding:0;max-width:none;margin:0}
+.embed .site-head,.embed .intro,.embed .disclosure,.embed .project-switch,
+.embed .demo-header,.embed .demo-toolbar,.embed .explain,.embed .footer{display:none!important}
+.embed .demo-area{padding:0}
+.embed .workspace{box-shadow:none;border:0;min-height:0;grid-template-columns:188px minmax(0,1fr)}
+.embed .workspace-sidebar{padding:12px 8px}
+.embed .workspace-sidebar nav button{font-size:11px;padding:9px 8px}
+.embed .workspace-main{padding:18px 16px}
+@media(max-width:710px){.embed .workspace{grid-template-columns:minmax(0,1fr)}.embed .workspace-sidebar{display:none}.embed .workspace-main{padding:10px}}

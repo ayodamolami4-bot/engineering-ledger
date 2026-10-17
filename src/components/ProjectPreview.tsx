@@ -1,24 +1,25 @@
 import type {Project} from '../content/projects';
 
-/** Only the standalone sample-data walkthrough is embedded here. Never production credentials or data. */
+/** Live-rendered sample walkthrough, intentionally independent of either production application. */
 export function ProjectPreview({project}:{project:Project}) {
+ const embeddedDemo=project.demoPath.replace('#','?embed=1#');
  return <section className="guided-preview-section" id="preview" aria-labelledby="preview-title">
    <div className="guided-preview-heading">
-    <div><p className="eyebrow">GUIDED PRODUCT WALKTHROUGH / SAMPLE DATA</p>
-     <h2 id="preview-title">Explore what a customer or team member actually does.</h2>
-     <p>Start with the real user journey, then switch to the engineering views that explain how the system protects it. This independent sample is interactive, but it is not the production interface.</p>
+    <div><p className="eyebrow">EXPLORABLE PRODUCT EXPERIENCE / FICTIONAL DATA</p>
+     <h2 id="preview-title">See the experience before reading the implementation.</h2>
+     <p>Begin with the team member or customer experience, then inspect how the workflows connect to permissions, orders and traceable records. This interactive sample isn't the production application.</p>
     </div>
-    <a className="btn btn-primary" href={project.demoPath}>Launch interactive preview ↗</a>
+    <a className="btn btn-primary" href={project.demoPath}>Explore the full product tour ↗</a>
    </div>
-   <a href={project.demoPath} className="guided-preview-media" aria-label={`Open ${project.title} interactive sample-data demonstration`}>
-    <img loading="lazy" decoding="async" src={project.previewScreenshot} alt={`${project.title} fictional sample-data demonstration screen`} />
-    <span className="preview-overlay">Explore sample workflow <span aria-hidden="true">↗</span></span>
+   <a href={project.demoPath} className="guided-preview-media" aria-label={`Launch ${project.title} guided product experience`}>
+    <iframe title={`${project.title} sample workspace preview, illustrative data`} loading="lazy" src={embeddedDemo} tabIndex={-1} aria-hidden="true"/>
+    <span className="preview-overlay">Open the interactive experience <span aria-hidden="true">↗</span></span>
    </a>
-   <p className="preview-disclaimer">{project.previewScene} All preview actions remain in the browser and do not affect the live applications.</p>
+   <p className="preview-disclaimer">This embedded screen runs the actual portfolio walkthrough, using fabricated sample records. It is NOT a screenshot of an authenticated production account. Neither application or its database is affected.</p>
    <div className="demo-choices">
-    <div><strong>Guided preview</strong><span>Immediate, sample-data interaction</span><a href={project.demoPath}>Start now →</a></div>
-    <div><strong>Engineering record</strong><span>Architecture, decisions and tests</span><a href="#architecture">Explore evidence →</a></div>
-    <div><strong>Live product</strong><span>Authentic application; free hosting may wake slowly</span><a href={project.liveUrl} target="_blank" rel="noreferrer">Open live app ↗</a></div>
+    <div><strong>Try the experience</strong><span>Customer or employee first, then deeper workflows</span><a href={project.demoPath}>Start now →</a></div>
+    <div><strong>Engineering case study</strong><span>Architecture, decisions and tested behavior</span><a href="#architecture">Read the case study →</a></div>
+    <div><strong>Production application</strong><span>Real deployed product; sign-in may be needed</span><a href={project.liveUrl} target="_blank" rel="noreferrer">Open live product ↗</a></div>
    </div>
- </section>
+ </section>;
 }
