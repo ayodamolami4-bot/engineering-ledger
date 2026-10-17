@@ -9,6 +9,8 @@ test('ManageOS demo: cannot bypass review; submission and approval leave audit e
  const goto=x=>screen=x, announce=x=>announcement=x;
  manageosAction('manageos-approve',s,goto,announce);
  assert.equal(s.task.status,'IN_PROGRESS','Cannot approve without a submission');
+ manageosAction('manageos-resolve',s,goto,announce);
+ assert.equal(s.blocker.status,'RESOLVED');
  manageosAction('manageos-submit',s,goto,announce);
  assert.equal(s.task.status,'PENDING_REVIEW');assert.equal(screen,'review');
  assert.match(announcement,/sample/i);

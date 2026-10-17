@@ -10,6 +10,7 @@ import Note from './pages/Note';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import './styles/global.css';
+import './styles/editorial.css';
 const router=createBrowserRouter([{element:<SiteShell/>,children:[
  {path:'/',element:<Home/>},{path:'/work',element:<Work/>},{path:'/work/:slug',element:<CaseStudy/>},
  {path:'/notes',element:<FieldNotes/>},{path:'/notes/:slug',element:<Note/>},{path:'/about',element:<About/>},{path:'/contact',element:<Contact/>},

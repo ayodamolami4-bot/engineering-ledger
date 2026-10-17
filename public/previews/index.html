@@ -15,6 +15,7 @@
     <header class="site-head">
       <a class="brand" href="#home" aria-label="Engineering Ledger demo home"><span class="brand-glyph" aria-hidden="true">⬡</span><span>THE ENGINEERING LEDGER<span class="brand-sub">PROJECT PREVIEW LAB</span></span></a>
       <nav class="nav" aria-label="Preview navigation">
+        <a id="back-to-study" href="/work/manageos">← Case study</a>
         <a href="#manageos" data-route="manageos">ManageOS</a>
         <a href="#marketplace" data-route="marketplace">Marketplace</a>
       </nav>
@@ -33,8 +34,9 @@
       <div class="project-switch" role="tablist" aria-label="Product previews"><button id="choose-manageos" role="tab" aria-selected="true" data-product="manageos">01 / ManageOS</button><button id="choose-marketplace" role="tab" aria-selected="false" data-product="marketplace">02 / Marketplace</button></div>
       <section class="demo-area" aria-live="off">
         <div class="demo-header"><div><p class="eyebrow" id="demo-eyebrow"></p><h2 id="demo-title"></h2><p class="demo-deck" id="demo-description"></p></div><button class="reset" type="button" id="reset-demo" title="Restore the original fictional example">↻ Reset sample</button></div>
+        <div class="demo-toolbar"><span>INTERACTIVE SCENARIO / FICTIONAL SAMPLE</span><a id="return-to-study" href="/work/manageos">← Back to the engineering case study</a></div>
         <div class="workspace">
-          <aside class="workspace-sidebar"><div class="sidebar-label">GUIDED SCENARIO</div><nav id="demo-nav" aria-label="Scenario screens"></nav><p class="sidebar-footer">Illustrative UI and data. Not a screenshot or a live account.</p></aside>
+          <aside class="workspace-sidebar"><div class="sidebar-label">GUIDED SCENARIO</div><p class="demo-nav-help">Choose any screen or follow the steps. Changes in the preview update the connected records.</p><nav id="demo-nav" aria-label="Scenario screens"></nav><p class="sidebar-footer">Illustrative UI and data. Not a screenshot or a live account.</p></aside>
           <div class="workspace-main" id="demo-root"></div>
         </div>
         <div class="explain"><div><p class="eyebrow">WHAT THIS DEMONSTRATES</p><h3 id="story-title"></h3></div><p id="story-body"></p></div>
@@ -43,7 +45,7 @@
     <footer class="footer"><span>THE ENGINEERING LEDGER · GUIDED PREVIEW PROTOTYPE</span><span>Deliberate systems. Understandable decisions.</span></footer>
   </div>
   <div id="announcer" class="sr-only" role="status" aria-live="polite"></div>
-  <!-- Cloudflare Web Analytics: tracks site and client-side navigation without requiring a portfolio backend. -->
+  <!-- Cloudflare Web Analytics -->
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "299ee7d6525c486cbfa15e81e2ab2e2e"}'></script>
 </body>
 </html>

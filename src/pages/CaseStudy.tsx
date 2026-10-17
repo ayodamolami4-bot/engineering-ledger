@@ -7,14 +7,13 @@ export default function CaseStudy(){
  const p=getProject(slug||'');
  if(!p)return <section className="wrap section"><h1>Project not found.</h1><Link to="/work">Back to work</Link></section>;
  return <article className="case-study wrap page-top">
-  <Link to="/work" className="back-link">← Selected work</Link>
   <header className="case-intro">
    <div><p className="eyebrow">CASE STUDY / {p.number} / {p.category}</p><h1 className="page-title">{p.title}</h1>
     <p className="case-subtitle">{p.subtitle}</p><p className="case-summary">{p.summary}</p>
-    <div className="button-row"><a className="btn btn-primary" href={p.demoPath}>Try the guided preview ↗</a><a className="btn btn-outline" href="#problem">Understand the product ↓</a></div>
+    <div className="button-row"><a className="btn btn-primary" href={p.demoPath}>Explore the product tour ↗</a><a className="btn btn-outline" href={p.liveUrl} target="_blank" rel="noopener noreferrer">Open live application ↗</a><a className="text-link" href="#problem">Read the engineering story ↓</a></div>
     <p className="preview-note">Fast walkthrough with fictional sample data. The live application remains separate.</p>
    </div>
-   <aside className="case-facts"><span>MY ROLE</span><strong>{p.role}</strong><span>YEAR</span><strong>{p.year}</strong><span>CORE STACK</span><p>{p.stack.join(' · ')}</p>{p.githubUrl?<a href={p.githubUrl} target="_blank" rel="noreferrer">Explore public backend code ↗</a>:<p>Production source is private; implementation is described below.</p>}</aside>
+   <aside className="case-facts"><a className="case-lead-preview" href={p.demoPath}><img src={p.previewScreenshot} alt={`${p.title} guided-preview sample workspace`}/><small>POPULATED SAMPLE PREVIEW — OPEN THE TOUR ↗</small></a><span>MY ROLE</span><strong>{p.role}</strong><span>YEAR</span><strong>{p.year}</strong><span>CORE STACK</span><p>{p.stack.join(' · ')}</p>{p.githubUrl?<a href={p.githubUrl} target="_blank" rel="noreferrer">Explore public backend code ↗</a>:<p>Production source is private; implementation is described below.</p>}</aside>
   </header>
   <div className="reader-summary" aria-label="Two-minute overview">
     <p className="eyebrow">THE SHORT VERSION</p>
@@ -22,6 +21,10 @@ export default function CaseStudy(){
     <div><h2>Why does it matter?</h2><p>{p.businessProblem}</p></div>
     <div><h2>What did I do?</h2><p>{p.role}. The technical record below describes the contribution, design decisions and verification.</p></div>
   </div>
+  <section className="case-visual-overview hex-surface" aria-label="Architecture overview">
+   <div><p className="eyebrow">THE PRODUCT / AT A GLANCE</p><h2>One clear experience.<br/><em>Several careful boundaries.</em></h2><p>{p.visual==='operations'?'A company objective passes through project and task ownership to an explicit review and traceable audit event.':'One customer checkout keeps order and payment context together while vendors manage fulfilment independently.'}</p></div>
+   <div className="case-visual-path">{(p.visual==='operations'?['Goal & unit','Project & task','Submission & review','Company audit']:['Customer cart','Parent order','Vendor sub-orders','Payment recovery']).map((label,i)=><div key={label}><span>{String(i+1).padStart(2,'0')}</span><strong>{label}</strong></div>)}</div>
+  </section>
   <ProjectPreview project={p}/>
   <div className="article-grid"><aside className="contents-list"><strong>IN THIS RECORD</strong>
    <a href="#problem">01 / Real-world problem</a><a href="#approach">02 / Workflow</a><a href="#value">03 / Business value</a>
