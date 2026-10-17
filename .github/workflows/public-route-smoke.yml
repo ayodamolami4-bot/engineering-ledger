@@ -15,7 +15,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          routes=(/ /work/ /work/manageos/ /work/marketplace/ /notes/ /notes/transactions/ /about/ /contact/ /previews/)
+          routes=(/ /work/ /work/manageos /work/manageos/ /work/marketplace /work/marketplace/ /notes/ /notes/transactions /notes/transactions/ /about /about/ /contact /contact/ /previews/)
           for route in "${routes[@]}"; do
             url="https://engineering-ledger.onrender.com${route}"
             echo "Checking ${url}"
@@ -28,4 +28,4 @@ jobs:
               grep -q 'id="root"' /tmp/route-body
             fi
           done
-          echo 'PASS: all 9 direct links return the expected application HTML'
+          echo 'PASS: all canonical and slashless direct links return the expected application HTML'
