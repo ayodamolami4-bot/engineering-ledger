@@ -30,6 +30,9 @@ jobs:
           if [ -z "$CHROME" ]; then echo "Browser not installed"; exit 1; fi
           "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --hide-scrollbars --disable-extensions --window-size=1440,1000 --screenshot="$RUNNER_TEMP/ledger-visual/home-desktop.png" http://127.0.0.1:4173/
           "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --hide-scrollbars --disable-extensions --window-size=390,844 --screenshot="$RUNNER_TEMP/ledger-visual/home-mobile.png" http://127.0.0.1:4173/
+          "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --hide-scrollbars --disable-extensions --window-size=1440,1000 --screenshot="$RUNNER_TEMP/ledger-visual/note-desktop.png" http://127.0.0.1:4173/notes/transactions
+          "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --hide-scrollbars --disable-extensions --window-size=1440,1000 --screenshot="$RUNNER_TEMP/ledger-visual/about-desktop.png" http://127.0.0.1:4173/about
+          "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --hide-scrollbars --disable-extensions --window-size=390,844 --screenshot="$RUNNER_TEMP/ledger-visual/case-mobile.png" http://127.0.0.1:4173/work/manageos
       - uses: actions/upload-artifact@v4
         if: always()
         with:
