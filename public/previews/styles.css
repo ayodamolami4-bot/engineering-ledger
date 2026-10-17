@@ -4,3 +4,29 @@
 /* Keep the tab-like guided navigation contained at phone widths. */
 @media(max-width:850px){.workspace{grid-template-columns:minmax(0,1fr)}.workspace-sidebar,.workspace-main{min-width:0}.workspace-sidebar nav{min-width:0;max-width:100%;width:100%;overflow-x:auto}.workspace-sidebar nav button{flex:0 0 auto}}
 @media(max-width:540px){.site-head{flex-wrap:wrap}.nav{width:100%;padding:0 0 3px 36px}.intro-actions{flex-wrap:wrap}.project-switch button{flex:1}.demo-header{min-width:0}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* Expanded operational walkthrough: the preview is illustrative, not a simplified fake login. */
+.workspace{grid-template-columns:235px minmax(0,1fr)}
+.workspace-sidebar nav button{font-size:12px;padding:10px 12px}
+.workspace-main h3{font-size:clamp(27px,3vw,36px)}
+.journey-line{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:17px 0;padding:14px;background:#e9efea;font:600 11px 'Courier New',monospace;color:#375749}
+.journey-line b{color:#b45742;font-size:15px;font-weight:400}
+.split-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 24px;margin:18px 0}
+.split-facts>div{display:grid;align-content:start;gap:6px;border-top:1px solid var(--line);padding-top:10px}
+.split-facts small{font:600 10px 'Courier New',monospace;color:var(--copper)}
+.split-facts strong{font-size:13px}
+.milestone-list{border:1px solid var(--line);background:#f5f4ed}
+.milestone-list div{padding:9px 12px;display:flex;gap:12px;font-size:12px;border-bottom:1px solid var(--line)}
+.milestone-list div:last-child{border:0}
+.milestone-list span{font:600 11px 'Courier New',monospace;color:var(--copper)}
+.activity-item{border-bottom:1px solid var(--line);padding:12px 0}
+.activity-item:last-child{border:0}
+.activity-item strong,.activity-item small{display:block;font-size:12px}
+.activity-item small{color:var(--muted);margin-top:4px}
+.product-actions{display:flex;flex-wrap:wrap;gap:7px}
+.product-actions button{width:auto;flex:1 1 110px;min-width:0}
+.checkout-total{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:14px;gap:15px}
+.demo-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:15px;margin:14px 0 18px;font:11px 'Courier New',monospace;color:#59706b}
+.demo-toolbar a{color:var(--copper);text-decoration:underline}
+.demo-nav-help{font-size:11px;color:#acbcb8;line-height:1.6;margin-bottom:17px}
+@media(max-width:850px){.workspace{grid-template-columns:minmax(0,1fr)}.workspace-sidebar{padding:12px}.workspace-sidebar nav button{flex:0 0 auto}.workspace-main{padding:23px}}
+@media(max-width:450px){.journey-line{font-size:9px}.split-facts{gap:12px}.product-actions{flex-direction:column}.product-actions button{flex:auto}.site-frame{padding:0 16px}}
