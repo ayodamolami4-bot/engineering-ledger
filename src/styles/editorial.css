@@ -173,3 +173,39 @@ body { background:var(--cream); }
  .bridge-caption{display:none}
  .editorial-hero-bottom{padding:10px 0}
 }
+
+/* Last visual review: show working content earlier on deep pages. */
+.note-publication.page-top{padding-top:35px}
+.note-publication .page-title{font-size:clamp(2.9rem,5vw,4.55rem);line-height:1.02;max-width:1020px}
+.note-publication .note-lede{margin:20px 0 24px;font-size:clamp(1.23rem,1.8vw,1.5rem);max-width:880px}
+.note-publication .note-layout{margin-top:27px}
+.about-editorial.page-top{padding-top:38px}
+.about-editorial-header{padding:10px 0 34px}
+.about-editorial-header .page-title{font-size:clamp(3.05rem,4.9vw,4.75rem);line-height:1.04}
+.about-editorial-header .page-deck{font-size:1.12rem;max-width:790px;margin-bottom:7px}
+.case-study.page-top{padding-top:34px}
+.case-study .case-intro{grid-template-columns:1.1fr .9fr;gap:36px;padding-bottom:35px}
+.case-study .case-intro .page-title{font-size:clamp(3.2rem,5vw,4.7rem);margin-bottom:14px}
+.case-study .case-subtitle{font-size:clamp(1.5rem,2.3vw,2rem);line-height:1.16}
+.case-study .case-summary{font-size:1rem;line-height:1.58;margin-bottom:15px}
+.case-study .case-intro .eyebrow{margin-bottom:8px}
+.case-study .case-intro .button-row{margin-top:14px;gap:11px}
+.case-study .case-intro .btn{font-size:.8rem;padding:10px 12px}
+.case-study .case-intro .text-link{font-size:.84rem}
+.case-study .case-facts{gap:8px;padding-top:0;border-top:0}
+.case-lead-preview{display:block;overflow:hidden;text-decoration:none!important;color:var(--ink)!important;background:#e0e9e2;border:1px solid #abb8af}
+.case-lead-preview img{display:block;aspect-ratio:1.5;width:100%;object-fit:cover;object-position:top left}
+.case-lead-preview small{display:block;padding:9px 12px;font:600 .65rem var(--mono);color:#53645e}
+@media(min-width:851px){.bridge-note--c{bottom:41px}}
+@media(max-width:850px){.case-study .case-intro{grid-template-columns:1fr;gap:25px}}
+@media(max-width:740px){
+ .note-publication .page-title{font-size:clamp(2.6rem,9vw,3.35rem)}
+ .note-publication .note-lede{font-size:1.17rem;margin:12px 0 22px}
+ .about-editorial-header .page-title{font-size:clamp(2.8rem,9vw,3.55rem)}
+ .case-study .case-intro .page-title{font-size:clamp(2.9rem,10vw,3.4rem)}
+ .case-study .case-subtitle{font-size:1.52rem}
+ .case-study .case-summary{font-size:.98rem}
+ .case-study .case-intro .btn{padding:10px 11px;font-size:.75rem}
+ .case-study .case-lead-preview img{aspect-ratio:1.85}
+ .case-study .preview-note{margin-top:10px;font-size:.6rem}
+}
