@@ -1,0 +1,31 @@
+name: Public portfolio route smoke test
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/public-route-smoke.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-live-routes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Check direct URL loads and page content
+        shell: bash
+        run: |
+          set -euo pipefail
+          routes=(/ /work/ /work/manageos/ /work/marketplace/ /notes/ /notes/transactions/ /about/ /contact/ /previews/)
+          for route in "${routes[@]}"; do
+            url="https://engineering-ledger.onrender.com${route}"
+            echo "Checking ${url}"
+            code=$(curl --silent --show-error --location --max-time 25 --retry 2 --output /tmp/route-body --write-out '%{http_code}' "${url}")
+            echo "HTTP ${code}"
+            if ! [[ "${code}" =~ ^2 ]]; then echo "::error::Route returned ${code}: ${url}"; exit 1; fi
+            if [ "${route}" = "/previews/" ]; then
+              grep -q 'id="demo-root"' /tmp/route-body
+            else
+              grep -q 'id="root"' /tmp/route-body
+            fi
+          done
+          echo 'PASS: all 9 direct links return the expected application HTML'
