@@ -8,7 +8,6 @@ export default function Note(){
  const wordCount=[essay.opening,...essay.sections.flatMap(x=>x.paragraphs)].join(' ').split(/\s+/).length;
  const minutes=Math.max(3,Math.ceil(wordCount/195));
  return <article className="article-page wrap page-top note-publication">
-  <Link className="back-link" to="/notes">← Back to the Field Notes index</Link>
   <p className="eyebrow">FIELD NOTE / {n.number} / {n.category}</p><h1 className="page-title">{n.title}</h1><p className="note-lede">{essay.opening}</p>
   <div className="note-quickfacts"><span><strong>ENGINEERING LEDGER</strong> / {n.number}</span><span>{minutes} MIN READ</span><span>{n.status.toUpperCase()}</span></div>
   <div className="note-layout"><nav className="note-sidebar" aria-label="Within this field note"><strong>THE RECORD</strong>{essay.sections.map((s,i)=><a href={`#record-${i+1}`} key={s.title}>{String(i+1).padStart(2,'0')} / {s.title}</a>)}<Link to="/notes">← All Field Notes</Link></nav>
