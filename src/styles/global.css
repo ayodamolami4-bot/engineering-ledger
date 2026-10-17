@@ -33,3 +33,19 @@
 .note-count{color:var(--soft);font:.76rem var(--mono);margin-top:17px}
 
 .project-card-actions{display:flex;flex-direction:column;align-items:flex-start;gap:13px}.project-card-demo-link{font-size:.85rem;font-weight:700;color:var(--copper);border-bottom:1px solid currentColor}
+
+/* Contact identity is itself an actionable link, distinct from its secondary action. */
+.contact-list .contact-identity {
+  display: inline-block;
+  font: 500 1.35rem/1.25 var(--serif);
+  color: var(--ink);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.contact-list .contact-identity:hover {
+  color: var(--copper);
+  text-decoration: underline;
+}
+@media(max-width:740px) {
+  .contact-list .contact-identity { font-size: 1.08rem; }
+}
