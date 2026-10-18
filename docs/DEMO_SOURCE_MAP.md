@@ -47,11 +47,11 @@ No real invitations, authentication, payments, payouts or courier requests are s
 
 ## Verification for the perspective revision
 
-The 15 local domain/renderer/metadata tests and production build pass. The user ran the complete browser journey successfully on Windows with Node.js 22.20.0 on 2026-10-18. The submitted screenshot archive contains 19 current screenshots and one stale failure capture from an earlier run.
+The 15 local domain/renderer/metadata tests and production build pass. The user ran the complete browser journey successfully on Windows with Node.js 22.20.0 on 2026-10-18, including the final category-label geometry, compact navigation and confirmation-cleanup assertions.
 
-Visual inspection found a mobile category heading compressed into a vertical column, seller/admin navigation retaining a 600px desktop minimum height at the 768px breakpoint, and old confirmation toasts remaining visible across identity/product navigation. These are corrected in the preview adapter styles and main event handling. Overview heading flow and marketplace navigation/sort control spacing were also corrected where the source styles expected different markup. The browser journey now asserts category-label geometry, compact navigation height and confirmation cleanup, and captures the portfolio home at mobile/tablet widths. A fresh browser run and screenshot inspection are pending for these corrections; the earlier PASS applies to the pre-correction build.
+All 21 screenshots in the final `ledger-final-review.zip` were inspected: the portfolio home at 1440px, 768px and 390px; ManageOS owner, scoped manager, employee and reviewer views; Marketplace customer, seller and administrator views; and order tracking. The first review's vertical category heading, oversized tablet navigation and stale cross-context confirmations are corrected in the final captures. The bridge is visible within the mobile/tablet layout. No blocking clipping or overlap was found in these captured views. See `VERIFICATION_2026-10-18.md` for the evidence inventory and test scope.
 
-GitHub-hosted verification remains blocked by the account billing/spending restriction confirmed in the job annotation.
+GitHub-hosted verification remains blocked by the account billing/spending restriction confirmed in the job annotation. The passing browser evidence comes from the user's local Windows run. Deployment and actual social-platform unfurling are separate post-merge checks.
 
 ## Social sharing cover
 
