@@ -54,3 +54,17 @@ Local domain/renderer tests and the production build pass. The expanded browser 
 The initial HTML includes Open Graph and Twitter large-image metadata, pointing to `public/social/engineering-ledger.png` on the Render portfolio domain. The 1200 × 630 PNG and editable SVG use the actual bridge component. `node scripts/generate-sharing-cover.mjs` regenerates the SVG; rasterize it to PNG after artwork changes. Static route shells retain the image metadata and set their own `og:url` so crawlers do not need JavaScript.
 
 The cover has been rendered and visually inspected locally. Its metadata and PNG dimensions are tested. Actual platform unfurling can only be confirmed after deployment and may depend on platform caches. This check does not replace the pending application browser/layout review.
+
+## Browser checks without GitHub Actions
+
+The PR #4 job annotation confirms that GitHub hosted Actions is blocked by account billing/spending limits. The separate Ubuntu migration annotation is informational. No test steps ran; this is not a browser test result.
+
+On a local computer, open this repository on `codex/role-based-project-experiences` with Node.js 22 or later, then run:
+
+```sh
+npm ci
+npx playwright install chromium
+npm run test:browser
+```
+
+`test:browser` builds the portfolio, starts a loopback-only preview on an available port, runs the same desktop/mobile journeys, writes screenshots to `test-artifacts`, and stops the preview. It works from PowerShell or a Unix shell. Linux machines may need `npx playwright install --with-deps chromium` instead. The first browser download needs an internet connection. This route does not use GitHub Actions minutes or change account billing. Upload the screenshots with the console result for visual review before merging.
