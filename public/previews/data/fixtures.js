@@ -47,5 +47,5 @@ export function marketplaceFixture(){const s=baseMarketplaceFixture();
  ['SKU-E','Everyday running shoes','Lagos Active',38500,18,'Fashion'],['SKU-F','Minimal everyday watch','Fieldwork Supplies',29700,9,'Fashion'],['SKU-G','Botanical fragrance','Palm & Petal',18500,14,'Beauty'],['SKU-H','Fresh produce basket','Green Basket',12500,21,'Groceries'],['SKU-I','Training essentials kit','Lagos Active',24000,7,'Sports'],['SKU-J','Wireless over-ear headphones','Stationery Lab',65000,11,'Electronics'],['SKU-K','Linen accent chair','Desk & Co.',145000,4,'Home & living'],['SKU-L','Everyday commuter backpack','Fieldwork Supplies',28000,13,'Fashion']
  ].map(([id,name,vendor,price,stock,category])=>({id,name,vendor,price,stock,category})));
  s.address={name:'Maya Okon',phone:'08000000000',address:'12 Example Street',city:'Ikeja',state:'Lagos',country:'Nigeria',method:'delivery'};
- s.addressSaved=false;s.paymentError='';return s;
+ s.addressSaved=false;s.paymentError='';s.selectedVendor='Stationery Lab';return s;
 }

@@ -15,13 +15,13 @@ function render(){
  $('back-to-study').href=manageos?'/work/manageos':'/work/marketplace';$('return-to-study').href=$('back-to-study').href;
  $('demo-title').textContent=manageos?'ManageOS':'Marketplace';
  $('demo-description').textContent=manageos?'Northstar Operations — populated company workspace':'Browse the storefront, place a simulated order, then follow seller fulfilment.';
- for(const tab of document.querySelectorAll('[data-product]'))tab.setAttribute('aria-selected',String(tab.dataset.product===s.product));
+ for(const tab of document.querySelectorAll('button[data-product]'))tab.setAttribute('aria-selected',String(tab.dataset.product===s.product));
  $('demo-root').innerHTML=manageos?manageosRender(current,s.manageos):marketplaceRender(current,s.marketplace);
  const [heading,body]=(manageos?manageosStories:marketplaceStories)[current];$('story-title').textContent=heading;$('story-body').textContent=body;
  document.querySelectorAll('[data-route]').forEach(x=>x.classList.toggle('active',x.dataset.route===s.product));
 }
 document.addEventListener('click',event=>{
- const product=event.target.closest('[data-product]');if(product){location.hash=product.dataset.product;setProduct(product.dataset.product);return;}
+ const product=event.target.closest('button[data-product]');if(product){location.hash=product.dataset.product;setProduct(product.dataset.product);return;}
  const screen=event.target.closest('[data-screen]');if(screen){if(screen.dataset.screen==='work')s.manageos.selectedTask=null;setScreen(screen.dataset.screen);return;}
  const act=event.target.closest('[data-action]');if(!act)return;
  const action=act.dataset.action;
@@ -36,7 +36,7 @@ document.addEventListener('click',event=>{
  }
  render();
 });
-document.addEventListener('change',event=>{if(event.target.id==='sample-shop-sort'){s.marketplace.sort=event.target.value;render();}});
+document.addEventListener('change',event=>{if(event.target.id==='demo-vendor'){s.marketplace.selectedVendor=event.target.value;render();return;}if(event.target.id==='sample-shop-sort'){s.marketplace.sort=event.target.value;render();}});
 document.addEventListener('submit',event=>{
  const form=event.target.closest('[data-form]');if(!form)return;event.preventDefault();const fields=Object.fromEntries(new FormData(form));
  if(form.dataset.form==='search'){s.marketplace.query=String(fields.query).trim();s.screen.marketplace='catalog';}

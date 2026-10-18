@@ -4,7 +4,7 @@ import {mkdir} from 'node:fs/promises';
 const out=process.env.LEDGER_SCREENSHOTS||'test-artifacts';await mkdir(out,{recursive:true});
 const browser=await chromium.launch({headless:true});
 const errors=[];const page=await browser.newPage({viewport:{width:1440,height:1000}});
-page.on('pageerror',e=>errors.push(e.message));
+page.on('pageerror',e=>{errors.push(e.message);console.error('Browser error:',e.message);});
 const base='http://127.0.0.1:4173';
 await page.goto(base);await page.getByRole('img',{name:'A bridge from first principles'}).waitFor();await page.screenshot({path:`${out}/home-desktop.png`,fullPage:true});
 await page.goto(base+'/previews/#manageos');await page.getByRole('heading',{name:'See what is happening across the company.'}).waitFor();await page.screenshot({path:`${out}/manageos-desktop.png`,fullPage:true});
