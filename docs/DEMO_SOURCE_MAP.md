@@ -48,3 +48,9 @@ No real invitations, authentication, payments, payouts or courier requests are s
 ## Verification for the perspective revision
 
 Local domain/renderer tests and the production build pass. The expanded browser journey is committed, but the initial PR #4 GitHub Actions attempt failed before runner allocation (empty steps; no browser execution or screenshots). Browser/visual verification remains pending; do not interpret the local tests as visual approval.
+
+## Social sharing cover
+
+The initial HTML includes Open Graph and Twitter large-image metadata, pointing to `public/social/engineering-ledger.png` on the Render portfolio domain. The 1200 × 630 PNG and editable SVG use the actual bridge component. `node scripts/generate-sharing-cover.mjs` regenerates the SVG; rasterize it to PNG after artwork changes. Static route shells retain the image metadata and set their own `og:url` so crawlers do not need JavaScript.
+
+The cover has been rendered and visually inspected locally. Its metadata and PNG dimensions are tested. Actual platform unfurling can only be confirmed after deployment and may depend on platform caches. This check does not replace the pending application browser/layout review.
