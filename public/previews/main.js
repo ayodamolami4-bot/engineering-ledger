@@ -7,7 +7,7 @@ const s={product:'manageos',screen:{manageos:'overview',marketplace:'catalog'},m
 const $=id=>document.getElementById(id);
 let noticeTimer;
 function announce(message){$('announcer').textContent=message;clearTimeout(noticeTimer);$('announcer').classList.add('visible');noticeTimer=setTimeout(()=>$('announcer').classList.remove('visible'),5000);}
-function setProduct(product){if(!['manageos','marketplace'].includes(product))return;s.product=product;render();}
+function setProduct(product){if(!['manageos','marketplace'].includes(product))return;if(s.product!==product){clearTimeout(noticeTimer);$('announcer').classList.remove('visible');$('announcer').textContent='';}s.product=product;render();}
 function setScreen(screen){if(!(s.product==='manageos'?manageosScreens:marketplaceScreens).some(x=>x.id===screen))return;s.screen[s.product]=screen;render();}
 function render(){
  const manageos=s.product==='manageos',current=s.screen[s.product];

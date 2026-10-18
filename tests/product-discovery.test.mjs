@@ -11,20 +11,20 @@ test('Sample storefront search, category and sorting are functional rather than 
  assert.match(rerender(),/data-action="filter-Electronics"/);
  marketplaceAction('filter-Electronics',s,()=>{},()=>{});
  assert.equal(s.category,'Electronics');
- assert.match(rerender(),/Compact mechanical keyboard/);
+ assert.match(rerender(),/Compact wireless keyboard/);
  assert.doesNotMatch(rerender(),/Desk task lamp/);
  s.query='zz-no-product-matches';
  assert.match(rerender(),/No sample products match/);
  s.query='';s.category='All';s.sort='price-asc';
  const rendered=rerender();
- assert.ok(rendered.indexOf('Canvas work notebook')<rendered.indexOf('Compact mechanical keyboard'));
+ assert.ok(rendered.indexOf('Spiral work notebook')<rendered.indexOf('Compact wireless keyboard'));
  assert.match(rendered,/<img src="https:\/\/images.unsplash.com\//);
 });
 
 test('Real product case-study screenshots are identified as previews, not production pages',()=>{
  const s=marketplaceFixture();
  const html=marketplaceRender('product',s);
- assert.match(html,/Compact mechanical keyboard/);
+ assert.match(html,/Compact wireless keyboard/);
  assert.match(html,/fictional|sample|illustrative/i);
 });
 

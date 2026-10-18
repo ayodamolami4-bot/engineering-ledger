@@ -72,7 +72,7 @@ test('Marketplace shopper sees catalog, product detail, cart and order tracking 
  const s=marketplaceFixture();let page='catalog';const go=x=>page=x;
  assert.match(marketplaceRender('catalog',s),/All Products/);
  marketplaceAction('view-SKU-A',s,go,quiet);
- assert.equal(page,'product');assert.match(marketplaceRender('product',s),/Compact mechanical keyboard/);
+ assert.equal(page,'product');assert.match(marketplaceRender('product',s),/Compact wireless keyboard/);
  marketplaceAction('add-SKU-A',s,go,quiet);
  marketplaceAction('add-SKU-B',s,go,quiet);
  assert.match(marketplaceRender('checkout',s),/Customer total/);
