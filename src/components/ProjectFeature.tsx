@@ -6,6 +6,7 @@ export function ProjectFeature({project}:{project:Project}){
    <h3>{project.title}</h3><p className="feature-definition">{project.visual==='operations'?'A company workspace for goals, teams, projects, assigned tasks and auditable approvals.':'An online marketplace where customers shop across sellers through one checkout.'}</p><p className="feature-problem">{project.visual==='operations'?'Problem: fragmented updates, unclear responsibilities and difficult-to-trace decisions.':'Problem: one convenient purchase must remain correct across stock, payments and separate vendor orders.'}</p><div className="portfolio-feature-tags"><span>{project.visual==='operations'?'TEAMWORK':'COMMERCE'}</span><span>{project.visual==='operations'?'AUDITABILITY':'ORDER INTEGRITY'}</span></div>
    <Link className="feature-case-link" to={`/work/${project.slug}`}>Read the case study ↗</Link>
   </div>
-  <div className="portfolio-feature-art"><Link to={`/work/${project.slug}`} aria-label={`Explore ${project.title} case study`}><img src={project.previewScreenshot} loading="lazy" decoding="async" alt={`${project.title} guided-preview interface populated with fictional records`} /></Link><span>ILLUSTRATIVE PREVIEW / NOT A LIVE SCREENSHOT</span></div>
+  <div className="portfolio-feature-art"><Link to={`/work/${project.slug}`} aria-label={`Explore ${project.title} case study`}><iframe title={`${project.title} populated demo`} src={project.demoPath.replace('#','?embed=1#')} loading="lazy" tabIndex={-1} aria-hidden="true"/></Link><span>ILLUSTRATIVE PREVIEW / NOT A LIVE SCREENSHOT</span></div>
  </article>
 }
+
