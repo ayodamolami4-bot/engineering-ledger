@@ -1,7 +1,7 @@
 import {chromium} from 'playwright';
 import assert from 'node:assert/strict';
-import {mkdir} from 'node:fs/promises';
-const out=process.env.LEDGER_SCREENSHOTS||'test-artifacts';await mkdir(out,{recursive:true});
+import {mkdir,rm} from 'node:fs/promises';
+const out=process.env.LEDGER_SCREENSHOTS||'test-artifacts';await mkdir(out,{recursive:true});await rm(`${out}/failure.png`,{force:true});
 const browser=await chromium.launch({headless:true});const errors=[];
 const page=await browser.newPage({viewport:{width:1440,height:1000}});page.on('pageerror',e=>errors.push(e.message));page.on('dialog',d=>d.accept());
 const base=process.env.LEDGER_BASE_URL||'http://127.0.0.1:4173';
@@ -26,6 +26,27 @@ try{
  await who('seller-0');await go('vendor-dashboard');await go('vendor-orders');await page.getByRole('button',{name:'Start processing'}).first().click();await page.getByRole('button',{name:'Mark shipped'}).first().click();await shot('marketplace-seller');
  await who('customer-1');await go('orders');await page.getByText('Demo courier event',{exact:true}).first().click();await page.getByRole('button',{name:'Simulate delivery arrival'}).first().click();await page.getByText('Review Compact wireless keyboard',{exact:true}).click();const keyboardReview=page.locator('form[data-command="review-create"]').filter({has:page.locator('input[name="productId"][value="SKU-A"]')});await keyboardReview.getByLabel('Your review').fill('Comfortable keyboard for a full work day.');await keyboardReview.getByRole('button',{name:'Submit review'}).click();
  await who('admin-1');await go('admin-reviews');await command('review-moderate').first().click();await go('admin-vendors');await shot('marketplace-admin');await submit('application-review');await who('customer-2');assert.equal(await page.getByRole('button',{name:'Seller Center',exact:true}).count(),1);await go('vendor-dashboard');await go('vendor-products');await page.getByText('Add a product',{exact:true}).click();await page.getByLabel('Product name',{exact:true}).fill('Field notebook');await page.getByLabel('Product description').fill('Durable fictional notebook for field planning.');await page.getByLabel('Price (NGN)').fill('5000');await page.getByLabel('Available stock').fill('3');await submit('product-save');await page.getByRole('heading',{name:'Field notebook'}).waitFor();
- for(const width of [768,390]){await page.setViewportSize({width,height:900});for(const [product,actor,target] of [['manageos','person-0','overview'],['manageos','person-1','work'],['marketplace','customer-1','catalog'],['marketplace','seller-0','vendor-orders'],['marketplace','admin-1','admin-dashboard']]){await page.goto(base+`/previews/#${product}`);await who(actor);if(target.startsWith('vendor-'))await go('vendor-dashboard');await go(target);await shot(`${product}-${actor}-${width}`);assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),true,`${product}/${actor}/${width} overflow`);}}
- assert.deepEqual(errors,[]);console.log('PASS: identity scopes, review feedback loop, deep links, attachments, invitations, mixed-store coupon/checkout, payment replay, fulfilment, review moderation, seller approval/product creation, 390/768 layouts.');
+ for(const width of [768,390]){
+  await page.setViewportSize({width,height:900});
+  await page.goto(base);await page.getByRole('img',{name:'A bridge from first principles'}).waitFor();
+  await shot(`home-${width}`);
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),true,`home/${width} overflow`);
+  for(const [product,actor,target] of [['manageos','person-0','overview'],['manageos','person-1','work'],['marketplace','customer-1','catalog'],['marketplace','seller-0','vendor-orders'],['marketplace','admin-1','admin-dashboard']]){
+   await page.goto(base+`/previews/#${product}`);await who(actor);
+   if(target.startsWith('vendor-'))await go('vendor-dashboard');
+   await go(target);
+   assert.equal(await page.locator('#announcer').evaluate(el=>el.classList.contains('visible')),false,'Old confirmations must clear when switching context');
+   if(target==='catalog'){
+    const heading=await page.locator('.filter-block > strong').boundingBox();
+    assert.ok(heading&&heading.width>=60&&heading.height<40,`Category label must stay on one line at ${width}px`);
+   }
+   if(target.startsWith('vendor-')||target.startsWith('admin-')){
+    const navigation=await page.locator('.vendor-sidebar,.admin-sidebar').boundingBox();
+    assert.ok(navigation&&navigation.height<240,`Navigation must collapse to content height at ${width}px`);
+   }
+   await shot(`${product}-${actor}-${width}`);
+   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),true,`${product}/${actor}/${width} overflow`);
+  }
+ }
+ assert.deepEqual(errors,[]);console.log('PASS: identity scopes, review feedback loop, deep links, attachments, invitations, mixed-store coupon/checkout, payment replay, fulfilment, review moderation, seller approval/product creation, 390/768 layouts, category labels, compact navigation and confirmation cleanup.');
 } catch(error){await shot('failure');throw error;}finally{await browser.close();}

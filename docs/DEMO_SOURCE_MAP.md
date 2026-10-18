@@ -47,7 +47,11 @@ No real invitations, authentication, payments, payouts or courier requests are s
 
 ## Verification for the perspective revision
 
-Local domain/renderer tests and the production build pass. The expanded browser journey is committed, but the initial PR #4 GitHub Actions attempt failed before runner allocation (empty steps; no browser execution or screenshots). Browser/visual verification remains pending; do not interpret the local tests as visual approval.
+The 15 local domain/renderer/metadata tests and production build pass. The user ran the complete browser journey successfully on Windows with Node.js 22.20.0 on 2026-10-18. The submitted screenshot archive contains 19 current screenshots and one stale failure capture from an earlier run.
+
+Visual inspection found a mobile category heading compressed into a vertical column, seller/admin navigation retaining a 600px desktop minimum height at the 768px breakpoint, and old confirmation toasts remaining visible across identity/product navigation. These are corrected in the preview adapter styles and main event handling. Overview heading flow and marketplace navigation/sort control spacing were also corrected where the source styles expected different markup. The browser journey now asserts category-label geometry, compact navigation height and confirmation cleanup, and captures the portfolio home at mobile/tablet widths. A fresh browser run and screenshot inspection are pending for these corrections; the earlier PASS applies to the pre-correction build.
+
+GitHub-hosted verification remains blocked by the account billing/spending restriction confirmed in the job annotation.
 
 ## Social sharing cover
 
