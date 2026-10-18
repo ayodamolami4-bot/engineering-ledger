@@ -22,12 +22,8 @@ jobs:
         run: npm run build
       - name: Verify interactive desktop and mobile journeys
         run: |
-          npm install --no-save playwright
           npx playwright install --with-deps chromium
-          mkdir -p "$RUNNER_TEMP/ledger-visual"
-          (npm run preview -- --host 127.0.0.1 --port 4173 > "$RUNNER_TEMP/ledger-preview.log" 2>&1 &)
-          for i in $(seq 1 30); do if curl -fsS http://127.0.0.1:4173/ > /dev/null; then break; fi; sleep 1; done
-          LEDGER_SCREENSHOTS="$RUNNER_TEMP/ledger-visual" node scripts/browser-journeys.mjs
+          LEDGER_SCREENSHOTS="$RUNNER_TEMP/ledger-visual" node scripts/local-browser-check.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:

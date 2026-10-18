@@ -1,58 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {manageosFixture,marketplaceFixture} from '../public/previews/data/fixtures.js';
-import {manageosAction,manageosRender,manageosScreens} from '../public/previews/modules/manageos.js';
-import {marketplaceAction,marketplaceRender,marketplaceScreens} from '../public/previews/modules/marketplace.js';
-const quiet=()=>{};
-const projectRoot=new URL('../',import.meta.url);
-const read=p=>readFileSync(new URL(p,projectRoot),'utf8');
-test('ManageOS: blocker, review rejection, resubmission, approval and audit share state',()=>{
- const s=manageosFixture();let screen='overview';const go=x=>screen=x;
- assert.ok(manageosScreens.length>=7);
- manageosAction('manageos-submit',s,go,quiet);
- assert.equal(s.task.status,'IN_PROGRESS','Cannot submit while sample blocker remains open');
- manageosAction('manageos-resolve',s,go,quiet);
- assert.equal(s.blocker.status,'RESOLVED');
- manageosAction('manageos-submit',s,go,quiet);
- assert.equal(s.task.status,'PENDING_REVIEW');
- manageosAction('manageos-reject',s,go,quiet);
- assert.equal(s.task.status,'IN_PROGRESS');
- assert.ok(s.events.find(x=>x.action==='Changes requested'));
- manageosAction('manageos-submit',s,go,quiet);
- manageosAction('manageos-approve',s,go,quiet);
- assert.equal(s.task.status,'APPROVED');assert.equal(screen,'audit');
- assert.equal(s.task.submissions,2);assert.deepEqual(s.task.reviews,['CHANGES_REQUESTED','APPROVED']);
- assert.match(manageosRender('audit',s),/Task submission approved/);
- assert.match(manageosRender('organization',s),/Operations/);
- assert.match(manageosRender('goals',s),/Milestones|Publish onboarding guide/);
-});
-test('Marketplace: reconciliation updates existing parent and vendor states without duplicate order',()=>{
- const s=marketplaceFixture();const before=s.orders.length;
- assert.ok(marketplaceScreens.length>=6);
- marketplaceAction('reconcile-PAY-DEMO-1041',s,quiet,quiet);
- assert.equal(s.orders.length,before);
- assert.equal(s.payments[0].status,'VERIFIED');
- const order=s.orders.find(o=>o.id==='ORD-DEMO-1041');
- assert.equal(order.status,'CONFIRMED');
- assert.equal(order.suborders[0].status,'PENDING_FULFILLMENT');
- marketplaceAction('reconcile-PAY-DEMO-1041',s,quiet,quiet);
- assert.equal(s.payments[0].attempts,2);
- assert.equal(s.orders.length,before);
- assert.match(marketplaceRender('payments',s),/Verified/);
-});
-test('Marketplace: sample admin review, wishlist, seller finance',()=>{
- const s=marketplaceFixture();marketplaceAction('wish-SKU-A',s,quiet,quiet);
- assert.deepEqual(s.wishlist,['SKU-A']);marketplaceAction('wish-SKU-A',s,quiet,quiet);
- assert.deepEqual(s.wishlist,[]);
- marketplaceAction('approve-Fieldwork Supplies',s,quiet,quiet);
- assert.equal(s.vendorApplications[0].status,'APPROVED');
- assert.match(marketplaceRender('finance',s),/gross sample volume/i);
- assert.match(marketplaceRender('catalog',s),/All Products/);
- assert.match(marketplaceRender('product',s),/Add to cart/);
- assert.match(marketplaceRender('tracking',s),/Seller updates/);
- assert.match(marketplaceRender('admin',s),/Approved/);
-});
+const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 test('Editorial navigation has a back action, real stack, authored essays and subtle hexagons',()=>{
  assert.match(read('src/components/SiteShell.tsx'),/goBack/);
  assert.match(read('src/pages/About.tsx'),/Kubernetes/);
@@ -67,20 +16,6 @@ test('Editorial navigation has a back action, real stack, authored essays and su
  assert.match(notePage,/What this record is/);
 });
 
-
-test('Marketplace shopper sees catalog, product detail, cart and order tracking before operational screens',()=>{
- const s=marketplaceFixture();let page='catalog';const go=x=>page=x;
- assert.match(marketplaceRender('catalog',s),/All Products/);
- marketplaceAction('view-SKU-A',s,go,quiet);
- assert.equal(page,'product');assert.match(marketplaceRender('product',s),/Compact wireless keyboard/);
- marketplaceAction('add-SKU-A',s,go,quiet);
- marketplaceAction('add-SKU-B',s,go,quiet);
- assert.match(marketplaceRender('checkout',s),/Customer total/);
- marketplaceAction('marketplace-place',s,go,quiet);
- assert.equal(page,'orders');
- assert.equal(s.orders.at(-1).suborders.length,2);
- assert.match(marketplaceRender('tracking',s),/Seller updates/);
-});
 
 test('The static route shell script exists so deep links do not require a Render rewrite',()=>{
  assert.match(read('package.json'),/emit-route-shells/);

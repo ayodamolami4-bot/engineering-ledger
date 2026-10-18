@@ -24,6 +24,7 @@ if (projectSlugs.length < 2 || noteSlugs.length < 4) throw new Error('Unexpected
 for (const route of routes) {
   const folder = join(dist, ...route.split('/'));
   mkdirSync(folder, {recursive:true});
-  writeFileSync(join(folder, 'index.html'), html);
+  writeFileSync(join(folder, 'index.html'), html.replace('property="og:url" content="https://engineering-ledger.onrender.com/"', `property="og:url" content="https://engineering-ledger.onrender.com/${route}/"`));
 }
 console.log(`Generated ${routes.length} static route entry points to support deep links on Render.`);
+
