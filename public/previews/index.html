@@ -8,6 +8,13 @@
   <meta name="color-scheme" content="light" />
   <title>The Engineering Ledger | Guided Product Previews</title>
   <link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="app-styles/manageos-shell.css" />
+<link rel="stylesheet" href="app-styles/manageos-overview.css" />
+<link rel="stylesheet" href="app-styles/marketplace-header.css" />
+<link rel="stylesheet" href="app-styles/marketplace-catalog.css" />
+<link rel="stylesheet" href="app-styles/marketplace-cart.css" />
+<link rel="stylesheet" href="app-styles/marketplace-payment.css" />
+<link rel="stylesheet" href="app-styles/adapters.css" />
   <script type="module" src="main.js"></script>
 </head>
 <body>
@@ -22,22 +29,12 @@
       </nav>
     </header>
     <main id="preview-content">
-      <section class="intro" id="intro">
-        <div class="intro-copy">
-          <p class="eyebrow">PORTFOLIO / EXPLORABLE PRODUCT EXPERIENCE</p>
-          <h1>Explore the decisions<br><em>behind the products.</em></h1>
-          <p>Two guided, interactive product scenarios. No account, payment, or waking backend required. These are independent previews built with fictional sample data—not the production applications.</p>
-          <div class="intro-actions"><a class="action" href="#manageos">Explore ManageOS <span aria-hidden="true">↗</span></a><a class="action secondary" href="#marketplace">Explore Marketplace <span aria-hidden="true">↗</span></a></div>
-        </div>
-        <div class="hex-art" aria-hidden="true"><svg viewBox="0 0 340 230"><g stroke="#69897b" fill="none" stroke-width="1.5"><polygon points="116,20 163,47 163,101 116,128 69,101 69,47"/><polygon points="203,20 250,47 250,101 203,128 156,101 156,47"/><polygon points="160,96 207,123 207,177 160,204 113,177 113,123"/><polygon points="247,96 294,123 294,177 247,204 200,177 200,123"/><polygon points="73,96 120,123 120,177 73,204 26,177 26,123"/></g><polygon points="160,96 207,123 207,177 160,204 113,177 113,123" fill="#DCECE4" stroke="#B45742" stroke-width="2"/><path d="M145 153h31M160 137v32" stroke="#B45742" stroke-width="2"/></svg></div>
-      </section>
-      <section class="disclosure" role="note"><strong>DEMONSTRATION ONLY</strong><span>Sample companies, people, products and orders. Simulated state lives in this browser tab; nothing is sent to a backend. Real product links and authentic screenshots will be added only after verification.</span></section>
+      <section class="disclosure" role="note"><strong>INTERACTIVE DEMO</strong><span>Fictional records, isolated in this tab. No account or payment required. Reset restores the starting data.</span></section>
       <div class="project-switch" role="tablist" aria-label="Product previews"><button id="choose-manageos" role="tab" aria-selected="true" data-product="manageos">01 / ManageOS</button><button id="choose-marketplace" role="tab" aria-selected="false" data-product="marketplace">02 / Marketplace</button></div>
       <section class="demo-area" aria-live="off">
         <div class="demo-header"><div><p class="eyebrow" id="demo-eyebrow"></p><h2 id="demo-title"></h2><p class="demo-deck" id="demo-description"></p></div><button class="reset" type="button" id="reset-demo" title="Restore the original fictional example">↻ Reset sample</button></div>
         <div class="demo-toolbar"><span>INTERACTIVE SCENARIO / FICTIONAL SAMPLE</span><a id="return-to-study" href="/work/manageos">← Back to the engineering case study</a></div>
         <div class="workspace">
-          <aside class="workspace-sidebar"><div class="sidebar-label">GUIDED SCENARIO</div><p class="demo-nav-help">Choose any screen or follow the steps. Changes in the preview update the connected records.</p><nav id="demo-nav" aria-label="Scenario screens"></nav><p class="sidebar-footer">Illustrative UI and data. Not a screenshot or a live account.</p></aside>
           <div class="workspace-main" id="demo-root"></div>
         </div>
         <div class="explain"><div><p class="eyebrow">WHAT THIS DEMONSTRATES</p><h3 id="story-title"></h3></div><p id="story-body"></p></div>
@@ -45,8 +42,8 @@
     </main>
     <footer class="footer"><span>THE ENGINEERING LEDGER · GUIDED PRODUCT EXPERIENCE</span><span>Deliberate systems. Understandable decisions.</span></footer>
   </div>
-  <div id="announcer" class="sr-only" role="status" aria-live="polite"></div>
-  <!-- Cloudflare Web Analytics -->
+  <div id="announcer" class="demo-toast" role="status" aria-live="polite"></div>
+  <!-- Aggregate page analytics, retained from the existing portfolio. -->
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "299ee7d6525c486cbfa15e81e2ab2e2e"}'></script>
 </body>
 </html>

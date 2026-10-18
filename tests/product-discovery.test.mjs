@@ -6,7 +6,7 @@ import {marketplaceAction,marketplaceRender} from '../public/previews/modules/ma
 test('Sample storefront search, category and sorting are functional rather than ornamental',()=>{
  const s=marketplaceFixture();
  const rerender=()=>marketplaceRender('catalog',s);
- assert.match(rerender(),/id="sample-shop-search"/);
+ assert.match(rerender(),/aria-label="Search marketplace"/);
  assert.match(rerender(),/id="sample-shop-sort"/);
  assert.match(rerender(),/data-action="filter-Electronics"/);
  marketplaceAction('filter-Electronics',s,()=>{},()=>{});
@@ -18,7 +18,7 @@ test('Sample storefront search, category and sorting are functional rather than 
  s.query='';s.category='All';s.sort='price-asc';
  const rendered=rerender();
  assert.ok(rendered.indexOf('Canvas work notebook')<rendered.indexOf('Compact mechanical keyboard'));
- assert.match(rendered,/<svg viewBox=/);
+ assert.match(rendered,/<img src="https:\/\/images.unsplash.com\//);
 });
 
 test('Real product case-study screenshots are identified as previews, not production pages',()=>{
@@ -27,3 +27,4 @@ test('Real product case-study screenshots are identified as previews, not produc
  assert.match(html,/Compact mechanical keyboard/);
  assert.match(html,/fictional|sample|illustrative/i);
 });
+

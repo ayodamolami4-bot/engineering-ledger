@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom';
 import {site} from '../content/site';
 import {projects} from '../content/projects';
 import {ProjectFeature} from '../components/ProjectFeature';
-import {SystemStudy} from '../components/SystemStudy';
+import {BridgeStudy} from '../components/BridgeStudy';
 import {fieldNotes} from '../content/notes';
 const selected=['transactions','system-boundaries','testing-strategy','auditability'];
 const topics=selected.map(slug=>fieldNotes.find(n=>n.slug===slug)!);
@@ -14,7 +14,7 @@ export default function Home(){return <div className="ledger-home">
    <p className="hero-deck">I'm {site.name}. I build software for real operational problems—where the right decisions make systems useful, reliable and easier to change.</p>
    <div className="button-row"><Link className="btn btn-primary" to="/work">View my work <span aria-hidden="true">→</span></Link><Link className="text-link" to="/about">Meet the engineer ↗</Link></div>
    <p className="hero-aside">01 / Systems matter. The people using them matter more.</p>
-  </div><SystemStudy/></div>
+  </div><BridgeStudy/></div>
   <div className="wrap editorial-hero-bottom"><span>ENGINEERING LEDGER / FIELD EDITION</span><span>PRODUCT · ARCHITECTURE · OPERATIONS</span><span>2026 — LAGOS</span></div>
  </section>
  <section className="wrap editorial-section home-projects" id="selected-work">
@@ -35,3 +35,4 @@ export default function Home(){return <div className="ledger-home">
  </div></section>
  <section className="closing-note"><div className="wrap closing-note-grid"><div><p className="eyebrow">04 / GET IN TOUCH</p><h2>Let's talk about the work.</h2><p>Open to engineering roles, product collaboration and thoughtful technical conversations.</p></div><div className="closing-links"><a href={`mailto:${site.email}`}>Email <span>↗</span></a><a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <span>↗</span></a><a href={site.github} target="_blank" rel="noopener noreferrer">GitHub <span>↗</span></a><a href={site.resume} download>Resume <span>↓</span></a></div></div></section>
  </div>}
+

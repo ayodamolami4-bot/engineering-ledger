@@ -1,31 +1,19 @@
-/** An original architectural line study; an illustration of engineering judgement, not a product screenshot. */
+/** Original perspective study of a suspension bridge; conceptual, not a construction drawing. */
 export function BridgeStudy(){
- const deck=[0,1,2,3,4,5,6].map(n=>n*5);
- return <div className="bridge-study">
-  <div className="bridge-note bridge-note--a">Understand<br/>the problem <span>↘</span></div>
-  <svg viewBox="0 0 680 420" role="img" aria-label="Architectural pencil-style line study of a cable-stayed bridge, with engineering guidelines and intersecting construction lines">
-   <defs><pattern id="paper-grain" patternUnits="userSpaceOnUse" width="28" height="28"><circle cx="4" cy="6" r=".45" fill="#768177" opacity=".5"/><circle cx="19" cy="22" r=".6" fill="#768177" opacity=".25"/></pattern></defs>
-   <rect width="680" height="420" fill="url(#paper-grain)" opacity=".45"/>
-   <g stroke="#7c8982" strokeWidth=".7" opacity=".33" fill="none">
-    {Array.from({length:11},(_,i)=><path key={'v'+i} d={`M${95+i*40} 25L${108+i*40} 352`}/>)}
-    {Array.from({length:8},(_,i)=><path key={'h'+i} d={`M50 ${68+i*35}L626 ${75+i*35}`}/>)}
-    <path d="M42 360L645 70M76 42L626 358M142 360L607 42"/>
-   </g>
-   <g stroke="#21363d" strokeLinecap="round" fill="none">
-    <path strokeWidth="2.5" d="M60 311L621 311"/><path strokeWidth="1.1" d="M49 317L627 317M71 323L618 323"/>
-    {deck.map((d,i)=><path key={'beam'+i} strokeWidth=".8" opacity=".65" d={`M${75+d*2} 312l6 15M${545-d*2} 311l-6 15`}/>)}
-    <path strokeWidth="2" d="M215 313L292 80L307 80L371 313M292 80L292 49L307 49L307 80"/>
-    <path strokeWidth="1" opacity=".8" d="M221 313L298 83M362 312L301 83M301 81L301 45"/>
-    {Array.from({length:9},(_,i)=><g key={'cable'+i} strokeWidth={i%2?.9:1.35} opacity={i%2?.52:.82}><path d={`M${295-i*0.9} 82 L${66+i*19} 311`}/><path d={`M${303+i*.7} 82 L${602-i*20} 311`}/></g>)}
-    <path strokeWidth="1.1" d="M45 339L631 339M50 344L631 344"/>
-    <path strokeWidth="1" opacity=".5" d="M80 316L195 367M557 312L605 365M280 50l-14 250M318 49l26 259"/>
-    <path strokeWidth="1" strokeDasharray="4 6" opacity=".55" d="M300 31L300 363M48 311L646 311"/>
-    <path strokeWidth="1.3" d="M200 310l-24 49M391 311l19 48"/>
-   </g>
-   <g fill="#21363d" fontFamily="Georgia,serif" fontSize="12" opacity=".75"><text x="68" y="382">STRUCTURAL STUDY / 01</text><text x="480" y="383">FORM FOLLOWS LOAD</text></g>
-  </svg>
-  <div className="bridge-note bridge-note--b">Choose the<br/>simplest solution<br/>that works <span>↙</span></div>
-  <div className="bridge-note bridge-note--c">Design for change <span>↗</span></div>
-  <p className="bridge-caption">An engineering study in constraints, connections and deliberate choices.</p>
- </div>;
+ return <figure className="bridge-study bridge-restored"><svg viewBox="0 0 720 460" role="img" aria-labelledby="bridge-title bridge-desc">
+ <title id="bridge-title">A bridge from first principles</title><desc id="bridge-desc">Two towers, curved suspension cables, vertical hangers, a braced roadway and foundations, drawn in perspective with pencil construction lines and annotations.</desc>
+ <defs><pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(25)"><path d="M0 0V5" stroke="#56635c" strokeWidth=".6"/></pattern></defs>
+ <g fill="none" stroke="#697c71" strokeWidth=".7" opacity=".3"><path d="M26 355L699 208M30 382L700 228M46 409L699 246M44 324L701 199M233 50V415M486 33V356M45 370L687 86M82 420L666 98"/><path strokeDasharray="5 6" d="M20 300L702 167M231 20V435M481 12V392M30 420L700 288"/><ellipse cx="235" cy="361" rx="67" ry="15"/><ellipse cx="486" cy="308" rx="48" ry="10"/></g>
+ <g fill="none" stroke="#293f37" strokeLinejoin="round" strokeLinecap="round">
+ <path d="M59 333L643 222L674 242L82 365Z" fill="#e8e6dc" strokeWidth="1.7"/><path d="M82 365L674 242V253L82 378ZM59 333V345L82 378" fill="url(#hatch)" strokeWidth="1.2"/><path d="M68 339L651 228M74 348L662 236" strokeWidth=".7"/>
+ {Array.from({length:22},(_,i)=>{const x=88+i*26,y=365-(x-82)*.208;return <path key={i} d={`M${x} ${y}l13 8 13-13`} strokeWidth=".75"/>;})}
+ <path d="M207 362L213 99L227 94L239 101L235 354L225 364ZM257 351L258 111L271 106L281 112L281 345L270 354Z" fill="#eeece3" strokeWidth="1.7"/><path d="M213 99L225 105L239 101M225 105V364M258 111L270 118L281 112M270 118V354M227 126L259 136L259 150L227 140M228 260L258 266L258 278L228 272" strokeWidth="1.2"/>
+ <path d="M456 310L460 69L473 65L484 71L480 306L470 314ZM496 302L498 80L510 77L519 82L520 297L509 305Z" fill="#eeece3" strokeWidth="1.6"/><path d="M460 69L472 75L484 71M472 75L470 314M498 80L509 87L519 82M509 87V305M475 94L498 101V113L475 106M474 223L498 227V239L474 235"/>
+ <path d="M197 363L225 376L247 365V379L223 389L196 375ZM251 352L272 363L291 354V368L272 376L250 365ZM448 312L470 324L491 315V327L470 336L448 325ZM490 305L510 315L530 307V319L510 327L490 317" fill="url(#hatch)"/>
+ <g strokeWidth="2"><path d="M62 332Q148 268 219 105Q342 352 467 75Q552 217 642 224"/><path d="M83 355Q170 286 267 117Q386 362 505 86Q580 231 673 242"/></g>
+ {Array.from({length:17},(_,i)=>{const t=(i+1)/18,x=219+248*t,y=(1-t)*(1-t)*105+2*(1-t)*t*352+t*t*75;return <g key={'h'+i} strokeWidth=".8"><path d={`M${x} ${y}V${333-(x-62)*.19}`}/><path d={`M${267+238*t} ${(1-t)*(1-t)*117+2*(1-t)*t*362+t*t*86}V${365-(267+238*t-82)*.208}`}/></g>;})}
+ <path d="M103 302V325M143 253V317M181 184V310M552 179V239M592 211V232M129 321V345M174 280V335M220 216V326M581 204V261M625 233V252" strokeWidth=".8"/><path d="M29 401q60-13 113-6m143-12 118-23m129-18 126-25M46 415l94-7m160-16 102-21m133-15 94-24" strokeWidth=".65" opacity=".45"/></g>
+ <g stroke="#b8744a" fill="none"><path d="M239 407L488 352M237 399l4 16M486 345l4 16M351 377l-8 5 10 1M390 369l10-5-11-1M110 115L175 115L214 139M563 100L546 128L530 157M567 371L546 339L511 319"/><circle className="bridge-load" cx="351" cy="287" r="4" fill="#b8744a"/></g>
+ <g fill="#596b60" fontFamily="Georgia,serif" fontSize="13" fontStyle="italic"><text x="43" y="102">Balance the forces.</text><text x="554" y="86">Tension / continuity</text><text x="551" y="388">A sound foundation.</text><text x="334" y="405" transform="rotate(-12 334 405)">one connected span</text></g><g fill="#69766c" fontFamily="monospace" fontSize="9" letterSpacing="1.8"><text x="37" y="35">FIELD STUDY 01 / CONNECTIONS</text><text x="37" y="448">PERSPECTIVE SKETCH · NOT A CONSTRUCTION DRAWING</text></g>
+ </svg><figcaption className="bridge-caption">Understand the forces. Make deliberate connections.</figcaption></figure>;
 }

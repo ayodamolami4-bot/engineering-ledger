@@ -48,7 +48,7 @@ test('Marketplace: sample admin review, wishlist, seller finance',()=>{
  marketplaceAction('approve-Fieldwork Supplies',s,quiet,quiet);
  assert.equal(s.vendorApplications[0].status,'APPROVED');
  assert.match(marketplaceRender('finance',s),/gross sample volume/i);
- assert.match(marketplaceRender('catalog',s),/Find your next favourite/);
+ assert.match(marketplaceRender('catalog',s),/All Products/);
  assert.match(marketplaceRender('product',s),/Add to cart/);
  assert.match(marketplaceRender('tracking',s),/Seller updates/);
  assert.match(marketplaceRender('admin',s),/Approved/);
@@ -58,7 +58,7 @@ test('Editorial navigation has a back action, real stack, authored essays and su
  assert.match(read('src/pages/About.tsx'),/Kubernetes/);
  assert.match(read('src/pages/About.tsx'),/Jenkins/);
  assert.match(read('src/pages/About.tsx'),/JUnit 5/);
- assert.match(read('src/pages/Home.tsx'),/SystemStudy/);
+ assert.match(read('src/pages/Home.tsx'),/BridgeStudy/);
  assert.match(read('src/styles/editorial.css'),/hex-surface::before/);
  const notePage=read('src/pages/Note.tsx');
  assert.ok(!notePage.includes('Further reading'));
@@ -70,7 +70,7 @@ test('Editorial navigation has a back action, real stack, authored essays and su
 
 test('Marketplace shopper sees catalog, product detail, cart and order tracking before operational screens',()=>{
  const s=marketplaceFixture();let page='catalog';const go=x=>page=x;
- assert.match(marketplaceRender('catalog',s),/Find your next favourite/);
+ assert.match(marketplaceRender('catalog',s),/All Products/);
  marketplaceAction('view-SKU-A',s,go,quiet);
  assert.equal(page,'product');assert.match(marketplaceRender('product',s),/Compact mechanical keyboard/);
  marketplaceAction('add-SKU-A',s,go,quiet);
@@ -89,3 +89,4 @@ test('The static route shell script exists so deep links do not require a Render
  assert.match(source,/work\/\$\{slug\}/);
  assert.match(source,/notes\/\$\{slug\}/);
 });
+
