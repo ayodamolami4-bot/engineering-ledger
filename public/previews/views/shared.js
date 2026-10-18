@@ -6,7 +6,7 @@ export const button=(action,label,fields={})=>`<button type="button" class="smal
 export const hidden=(name,value)=>`<input type="hidden" name="${e(name)}" value="${e(value??'')}">`;
 export const input=(name,label,value='',type='text')=>`<label>${e(label)}<input name="${e(name)}" type="${type}" value="${e(value)}" required></label>`;
 export const area=(name,label,value='')=>`<label>${e(label)}<textarea name="${e(name)}" required>${e(value)}</textarea></label>`;
-export const select=(name,label,choices,value='')=>`<label>${e(label)}<select name="${e(name)}">${choices.map(c=>{const [id,title]=Array.isArray(c)?c:[c,c.replaceAll('_',' ')];return `<option value="${e(id)}" ${id===value?'selected':''}>${e(title)}</option>`;}).join('')}</select></label>`;
+export const select=(name,label,choices,value='')=>`<label>${e(label)}<select name="${e(name)}" aria-label="${e(label)}">${choices.map(c=>{const [id,title]=Array.isArray(c)?c:[c,c.replaceAll('_',' ')];return `<option value="${e(id)}" ${id===value?'selected':''}>${e(title)}</option>`;}).join('')}</select></label>`;
 export const form=(action,body,label='Save')=>`<form data-command="${action}" class="record-form">${body}<button class="small-btn">${e(label)}</button></form>`;
 export const panel=(title,body)=>`<section class="panel"><h2>${e(title)}</h2>${body}</section>`;
 export const disclosure=(title,body)=>`<details class="record-editor"><summary>${e(title)}</summary>${body}</details>`;
