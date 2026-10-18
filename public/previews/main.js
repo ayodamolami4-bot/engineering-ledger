@@ -1,56 +1,17 @@
-import {manageosFixture,marketplaceFixture} from './data/fixtures.js';
-import {manageosScreens,manageosRender,manageosAction,manageosStories} from './modules/manageos.js';
-import {marketplaceScreens,marketplaceRender,marketplaceAction,marketplaceStories} from './modules/marketplace.js';
-import {workspaceAction,allTasks} from './modules/workspaces.js';
-import {validateAddress,submitWork,completePayment} from './modules/flows.js';
-const s={product:'manageos',screen:{manageos:'overview',marketplace:'catalog'},manageos:manageosFixture(),marketplace:marketplaceFixture()};
-const $=id=>document.getElementById(id);
-let noticeTimer;
-function announce(message){$('announcer').textContent=message;clearTimeout(noticeTimer);$('announcer').classList.add('visible');noticeTimer=setTimeout(()=>$('announcer').classList.remove('visible'),5000);}
-function setProduct(product){if(!['manageos','marketplace'].includes(product))return;if(s.product!==product){clearTimeout(noticeTimer);$('announcer').classList.remove('visible');$('announcer').textContent='';}s.product=product;render();}
-function setScreen(screen){if(!(s.product==='manageos'?manageosScreens:marketplaceScreens).some(x=>x.id===screen))return;s.screen[s.product]=screen;render();}
-function render(){
- const manageos=s.product==='manageos',current=s.screen[s.product];
- document.body.dataset.product=s.product;
- $('back-to-study').href=manageos?'/work/manageos':'/work/marketplace';$('return-to-study').href=$('back-to-study').href;
- $('demo-title').textContent=manageos?'ManageOS':'Marketplace';
- $('demo-description').textContent=manageos?'Northstar Operations — populated company workspace':'Browse the storefront, place a simulated order, then follow seller fulfilment.';
- for(const tab of document.querySelectorAll('button[data-product]'))tab.setAttribute('aria-selected',String(tab.dataset.product===s.product));
- $('demo-root').innerHTML=manageos?manageosRender(current,s.manageos):marketplaceRender(current,s.marketplace);
- const [heading,body]=(manageos?manageosStories:marketplaceStories)[current];$('story-title').textContent=heading;$('story-body').textContent=body;
- document.querySelectorAll('[data-route]').forEach(x=>x.classList.toggle('active',x.dataset.route===s.product));
-}
-document.addEventListener('click',event=>{
- const product=event.target.closest('button[data-product]');if(product){location.hash=product.dataset.product;setProduct(product.dataset.product);return;}
- const screen=event.target.closest('[data-screen]');if(screen){if(screen.dataset.screen==='work')s.manageos.selectedTask=null;setScreen(screen.dataset.screen);return;}
- const act=event.target.closest('[data-action]');if(!act)return;
- const action=act.dataset.action;
- if(s.product==='manageos'){
-  if(!workspaceAction(action,s.manageos,setScreen,announce))manageosAction(action,s.manageos,setScreen,announce);
- }else{
-  const m=s.marketplace;
-  if(action.startsWith('decrease-')){const line=m.cart.find(l=>l.id===action.slice(9));if(line&&line.quantity>1)line.quantity--;}
-  else if(action==='payment-failure'){m.paymentError='Payment was not completed. Your cart is unchanged. Try again when ready.';announce(m.paymentError);}
-  else if(action==='payment-success'){const message=completePayment(m,setScreen);announce(message);}
-  else{marketplaceAction(action,m,setScreen,announce);if(action.startsWith('filter-')){m.query='';s.screen.marketplace='catalog';}}
- }
- render();
-});
-document.addEventListener('change',event=>{if(event.target.id==='demo-vendor'){s.marketplace.selectedVendor=event.target.value;render();return;}if(event.target.id==='sample-shop-sort'){s.marketplace.sort=event.target.value;render();}});
-document.addEventListener('submit',event=>{
- const form=event.target.closest('[data-form]');if(!form)return;event.preventDefault();const fields=Object.fromEntries(new FormData(form));
- if(form.dataset.form==='search'){s.marketplace.query=String(fields.query).trim();s.screen.marketplace='catalog';}
- if(form.dataset.form==='delivery'){
-  const error=validateAddress(fields);if(error){$('form-error').textContent=error;return;}
-  s.marketplace.address=fields;s.marketplace.addressSaved=true;s.screen.marketplace='payment';
- }
- if(form.dataset.form==='submission'){
-  const result=submitWork(s.manageos,String(fields.summary));if(result){announce(result);return;}
-  announce('Work submitted for review');
- }
- if(form.dataset.form==='discussion'){const message=String(fields.message).trim();if(!message)return;s.manageos.discussions.push({author:'Daniel Adeyemi',text:message});announce('Reply posted');}
- render();
-});
-$('reset-demo').addEventListener('click',()=>{if(s.product==='manageos'){s.manageos=manageosFixture();s.screen.manageos='overview';}else{s.marketplace=marketplaceFixture();s.screen.marketplace='catalog';}announce('Demo sample restored');render();});
-function applyHash(){const product=location.hash.slice(1);if(['manageos','marketplace'].includes(product))setProduct(product);}
-window.addEventListener('hashchange',applyHash);applyHash();render();
+import {operationsState,operationsCommand,visibleProjects} from './domain/operations.js';
+import {commerceState,commerceCommand,customer} from './domain/commerce.js';
+import {operationsView} from './views/operations.js';
+import {commerceView} from './views/commerce.js';
+const s={product:'manageos',manageos:operationsState(),marketplace:commerceState(),ui:{manageos:{page:'overview'},marketplace:{page:'catalog'}}};
+const $=id=>document.getElementById(id);let noticeTimer;
+function announce(message,error=false){$('announcer').textContent=message;$('announcer').classList.add('visible');clearTimeout(noticeTimer);if(!error)noticeTimer=setTimeout(()=>$('announcer').classList.remove('visible'),6000);}
+function navigate(page,recordId=''){s.ui[s.product]={page,recordId};render();document.querySelector('.app-content h1,.catalog-page h1')?.setAttribute('tabindex','-1');document.querySelector('.app-content h1,.catalog-page h1')?.focus({preventScroll:true});if(recordId)document.getElementById('record-'+recordId)?.scrollIntoView({block:'center'});}
+function render(){const op=s.product==='manageos';document.body.dataset.product=s.product;$('back-to-study').href='/work/'+s.product;$('return-to-study').href='/work/'+s.product;$('demo-title').textContent=op?'ManageOS':'Marketplace';$('demo-description').textContent=op?'Northstar Operations — one company, distinct responsibilities':'One marketplace — customers, independent stores and platform oversight';document.querySelectorAll('button[data-product]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.product===s.product)));$('demo-root').innerHTML=op?operationsView(s.manageos,s.ui.manageos):commerceView(s.marketplace,s.ui.marketplace);$('story-title').textContent=op?'Follow responsibility through the organization.':'Follow the same records across perspectives.';$('story-body').textContent=op?'Identity determines visible work and allowed decisions. Assignments, evidence, feedback and notifications preserve who did what.':'A purchase connects customer tracking, store-specific fulfilment and finance. Seller approval and review moderation return to the same customer account.';}
+function switchPerson(id,page){const state=s[s.product],people=s.product==='manageos'?state.people:state.users;if(!people.some(p=>p.id===id))return;state.actorId=id;navigate(page||(s.product==='manageos'?'overview':state.users.find(x=>x.id===id).role==='ADMIN'?'admin-dashboard':'catalog'));}
+function run(action,fields){try{const result=(s.product==='manageos'?operationsCommand:commerceCommand)(s[s.product],action,fields);if(result.page)s.ui[s.product]={page:result.page,recordId:result.recordId};render();if(result.recordId)document.getElementById('record-'+result.recordId)?.scrollIntoView({block:'center'});if(result.message)announce(result.message);}catch(error){announce(error.message,true);const form=document.activeElement?.closest('form');if(form){let node=form.querySelector('.inline-error');if(!node){node=document.createElement('p');node.className='inline-error';node.setAttribute('role','alert');form.append(node);}node.textContent=error.message;}}}
+document.addEventListener('click',event=>{const b=event.target.closest('button');if(!b)return;if(b.dataset.product){location.hash=b.dataset.product;return;}if(b.dataset.person){switchPerson(b.dataset.person,b.dataset.target);if(b.dataset.record)navigate(b.dataset.target,b.dataset.record);return;}if(b.dataset.nav){navigate(b.dataset.nav,b.dataset.record);return;}if(b.dataset.category){s.marketplace.category=b.dataset.category;navigate('catalog');return;}if(b.dataset.command){if(['file-delete','person-remove','user-toggle','category-delete'].includes(b.dataset.command)&&!confirm('Apply this change to the fictional demo records?'))return;run(b.dataset.command,JSON.parse(b.dataset.fields||'{}'));return;}if(b.dataset.download){const f=s.manageos.files.find(f=>f.id===b.dataset.download&&visibleProjects(s.manageos).some(p=>p.id===f.projectId));if(!f)return;const url=URL.createObjectURL(new Blob([f.body],{type:'text/plain'})),a=document.createElement('a');a.href=url;a.download=f.name;a.click();URL.revokeObjectURL(url);}});
+document.addEventListener('change',event=>{if(event.target.id==='demo-identity')switchPerson(event.target.value);if(event.target.name==='sort'){s.marketplace.sort=event.target.value;render();}});
+document.addEventListener('submit',async event=>{const f=event.target;if(!f.matches('form'))return;event.preventDefault();const fields=Object.fromEntries(new FormData(f));if(f.hasAttribute('data-search')){s.marketplace.query=String(fields.query).trim();navigate('catalog');return;}if(f.dataset.filter){s.ui.manageos.filter=fields.status;render();return;}if(f.dataset.command){if(f.dataset.command==='file-add'){const file=fields.attachment;if(file.size>200000){announce('Choose a text file up to 200 KB.',true);return;}fields.name=file.name;fields.body=await file.text();delete fields.attachment;}run(f.dataset.command,fields);}});
+$('reset-demo').addEventListener('click',()=>{s[s.product]=s.product==='manageos'?operationsState():commerceState();navigate(s.product==='manageos'?'overview':'catalog');announce('This product’s fictional sample has been restored.');});
+function hash(){const product=location.hash.slice(1);if(['manageos','marketplace'].includes(product))s.product=product;render();}
+window.addEventListener('hashchange',hash);hash();

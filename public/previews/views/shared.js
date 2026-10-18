@@ -1,0 +1,14 @@
+export {escapeHtml as e,formatMoney as money} from '../data/fixtures.js';
+import {escapeHtml as e} from '../data/fixtures.js';
+export const badge=x=>`<span class="pill">${e(String(x).replaceAll('_',' '))}</span>`;
+export const nav=(page,label,recordId='')=>`<button type="button" class="small-btn outline" data-nav="${e(page)}" data-record="${e(recordId)}">${e(label)}</button>`;
+export const button=(action,label,fields={})=>`<button type="button" class="small-btn" data-command="${e(action)}" data-fields="${e(JSON.stringify(fields))}">${e(label)}</button>`;
+export const hidden=(name,value)=>`<input type="hidden" name="${e(name)}" value="${e(value??'')}">`;
+export const input=(name,label,value='',type='text')=>`<label>${e(label)}<input name="${e(name)}" type="${type}" value="${e(value)}" required></label>`;
+export const area=(name,label,value='')=>`<label>${e(label)}<textarea name="${e(name)}" required>${e(value)}</textarea></label>`;
+export const select=(name,label,choices,value='')=>`<label>${e(label)}<select name="${e(name)}">${choices.map(c=>{const [id,title]=Array.isArray(c)?c:[c,c.replaceAll('_',' ')];return `<option value="${e(id)}" ${id===value?'selected':''}>${e(title)}</option>`;}).join('')}</select></label>`;
+export const form=(action,body,label='Save')=>`<form data-command="${action}" class="record-form">${body}<button class="small-btn">${e(label)}</button></form>`;
+export const panel=(title,body)=>`<section class="panel"><h2>${e(title)}</h2>${body}</section>`;
+export const disclosure=(title,body)=>`<details class="record-editor"><summary>${e(title)}</summary>${body}</details>`;
+export const empty=label=>`<p class="empty-state">${e(label)}</p>`;
+export const identity=(options,selected,role,scope)=>`<section class="identity-bar" aria-label="Demo identity"><label>EXPERIENCE AS<select id="demo-identity">${options.map(p=>`<option value="${e(p.id)}" ${p.id===selected?'selected':''}>${e(p.name)} — ${e(p.role.replaceAll('_',' '))}</option>`).join('')}</select></label><div><strong>${e(role.replaceAll('_',' '))}</strong><span>${e(scope)}</span></div><small>Switch people to follow the handoff. All changes stay in this tab.</small></section>`;
