@@ -68,13 +68,13 @@ export const projects: readonly Project[] = [
     outcomesToMeasure:['Time managers spend requesting routine progress updates.','Median time between submission and review decision.','Time required to reconstruct a significant operational change.'],
     previewScreenshot:'/previews/assets/desktop-manageos-audit.webp',
     previewScene:'An illustrative audit screen from the independent sample-data walkthrough, not a production screenshot.',
-    demoPath:'/previews/#manageos', liveUrl:'https://manageos.onrender.com', visual:'operations'
+    demoPath:'/previews/#manageos', liveUrl:'https://manageos.onrender.com', githubUrl:'https://github.com/ayodamolami4-bot/ManageOS', visual:'operations'
   },
   {
     slug: 'marketplace', number:'02', category:'COMMERCE / TRANSACTIONS',
     title:'Multi-Vendor Marketplace', subtitle:'A unified buying experience with vendor-specific fulfillment.',
     summary:'A multi-vendor commerce platform with order orchestration, inventory coordination, payment recovery, and separate customer, vendor and administrator workflows.',
-    role:'Lead Backend Engineer — collaborative client project', year:'2026',
+    role:'Backend Lead — three-person team project', year:'2026',
     stack:['Java','Spring Boot','Spring Security','JPA','PostgreSQL','Docker'],
     businessProblem:'A single customer basket can span multiple merchants. Checkout must remain coherent for the buyer, while inventory, order fulfillment and uncertain payment states must remain correct for each vendor.',
     productApproach:'A parent order represents the customer purchase; vendor-specific sub-orders carry independent fulfillment work. Transaction boundaries coordinate stock updates, and payment verification and reconciliation handle uncertain states.',
